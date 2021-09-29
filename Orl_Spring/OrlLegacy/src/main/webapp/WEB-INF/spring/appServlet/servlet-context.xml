@@ -38,8 +38,8 @@
 				class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<beans:property name="host" value="smtp.naver.com" />
 		<beans:property name="port" value="465" /><!-- 587 or 25-->
-		<beans:property name="username" value="orullay" />
-		<beans:property name="password" value="bitcamp205~BIT" />
+		<beans:property name="username" value="유저네임" />
+		<beans:property name="password" value="패스워드" />
 		<beans:property name="defaultEncoding" value="utf-8" />
 		<beans:property name="javaMailProperties">
 			<beans:props>
