@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitcamp.orl.feed.mapper.FeedDao">
+
+	<!-- 피드 삭제 (ajax) -->
+	<delete id="deleteFeed">
+		DELETE FROM final.photoBoard
+		WHERE memberIdx = #{memberIdx} and boardIdx = #{boardIdx};
+	</delete>
+	
+	<!-- 피드 댓글 삭제 (ajax) -->
+	<delete id="deleteComment">
+		DELETE FROM final.photoBoardComment
+		WHERE boardCommentIdx = #{boardCommentIdx};
+	</delete>
+	
+	<!-- 전체 피드 리스트 (최신순) (ajax) -->
+	<select id="selectNewFeed"
+		resultType="com.bitcamp.orl.feed.domain.NewFeedList">
+		SELECT B.boardIdx, B.boardPhoto, B.boardDate, B.hashtag,
+		M.memberIdx, M.memberNickname
+		FROM final.photoBoard AS B NATURAL JOIN final.member AS M
+		ORDER BY B.boardIdx DESC;
+	</select>
+	
+	<!-- 피드 상세 -댓글리스트 (ajax) -->
+	<select id="selectFeedComment"
+		resultType="com.bitcamp.orl.feed.domain.FeedComment">
+		SELECT C.boardCommentIdx, C.comment, C.memberIdx,
+		M.memberNickname, M.memberProfile
+		FROM final.photoBoardComment AS C
+		NATURAL JOIN final.member AS M
+		WHERE boardIdx = #{boardIdx}
+		ORDER BY
+		C.boardCommentIdx DESC;
+	</select>
+	
+	<!-- 추가 (09.18.우리) -->
+	<!-- 피드 선택 -->
+	<select id="selectFeed"
+			resultType="com.bitcamp.orl.feed.domain.Feed">
+		SELECT * FROM final.photoBoard
+		WHERE boardIdx = #{boardIdx}
+	</select>
+	
+	<!-- 추가 (09.18.우리) -->
+	<!-- 닉네임 중복 체크 -->
+	<select id="selectByNickname" resultType="int">
+		SELECT count(*) FROM final.member
+		WHERE memberNickname = #{memberNickname}
+	</select>
+	
+	<!-- 추가 (09.22.우리 ) -->
+	<!-- memberNickname으로 memberIdx 찾기 -->
+	<select id="selectMemberIdx" resultType="int">
+		SELECT memberIdx FROM final.member
+		WHERE memberNickname = #{memberNickname}
+	</select>
+	
+	
+	
+	
+	
+	<!-- 1. 팔로잉 리스트 가져오기 (비동기통신) -->
+   <select id="selectFollowingList"
+      resultType="com.bitcamp.orl.feed.domain.FollowList">
+      select F.followIdx, F.memberIdx, F.memberIdx2,
+      M.memberNickname,M.memberProfile
+      from final.follow as F inner join final.member as M
+      on F.memberIdx2 = M.memberIdx
+      where F.memberIdx = #{memberIdx};
+   </select>
+
+   <!-- 2. 팔로워 리스트 가져오기 (비동기통신) -->
+
+   <select id="selectFollowerList"
+      resultType="com.bitcamp.orl.feed.domain.FollowList">
+      select F.followIdx, F.memberIdx, F.memberIdx2,
+      M.memberNickname,M.memberProfile
+      from final.follow as F inner join final.member as M
+      on F.memberIdx = M.memberIdx
+      where F.memberIdx2 = #{memberIdx};
+   </select>
+   
+   
+   <!-- 3. 팔로우 시작하기 (비동기통신) -->
+   <insert id="insertFollowMember">
+      insert into final.follow
+      (memberIdx, memberIdx2)
+      values(#{myIdx},#{yourIdx});
+   </insert>
+
+   <!-- 4. 팔로우 그만하기(비동기통신) -->
+
+   <delete id="deleteFollowMember">
+      delete
+      from final.follow
+      where memberIdx =#{myIdx} and memberIdx2 = #{yourIdx};
+
+   </delete>
+   
+   <!-- 5. 좋아요 누르기 -->
+   <insert id="insertLike">
+      insert into final.like
+      (memberIdx,boardIdx)
+      values (#{memberIdx}, #{boardIdx});
+   </insert>
+
+
+   <!-- 6. 좋아요 취소 -->
+   <delete id="deleteLike">
+      delete from final.like
+      where memberIdx=#{memberIdx} and boardIdx =#{boardIdx};
+   </delete>
+   
+   
+	<!--관리자용 추가0915 -->
+	<!-- 모든 항목가져오는 전체 피드 리스트 -->
+	<select id="selectAllFeed"
+		resultType="com.bitcamp.orl.feed.domain.FeedView">
+		SELECT B.boardIdx, B.boardPhoto, B.boardDiscription,
+		B.hashtag, B.tag, M.memberIdx, M.memberNickname, M.memberProfile
+		FROM
+		final.photoBoard AS B NATURAL JOIN final.member AS M ORDER BY
+		B.boardIdx DESC;
+	</select>
+
+	<!-- 피드 삭제 -->
+	<delete id="deleteFeedByAdmin">
+		DELETE FROM final.photoBoard WHERE boardIdx =
+		#{boardIdx};
+	</delete>
+	
+	<!-- 용민 -->
+	<!-- 산별 피드보기 -->
+	<select id="selectNewFeedByMountain"
+		resultType="com.bitcamp.orl.feed.domain.NewFeedList">
+		select
+		P.boardIdx, P.boardPhoto, P.boardDate, M.memberIdx, M.memberNickname
+		from final.photoBoard as P natural join final.member as M
+		where
+		P.hashtag regexp #{mName}
+		order by P.boardIdx DESC;
+	</select>
+
+</mapper>
