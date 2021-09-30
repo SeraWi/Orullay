@@ -110,6 +110,13 @@ CREATE TABLE final.like (
     constraint fk_boardIdx foreign key (boardIdx) references final.photoBoard(boardIdx)  ON DELETE CASCADE
 );
 
+-- countLike view
+create view final.countLike as
+select count(*) as count, boardIdx
+from final.like
+group by boardIdx
+order by count(*) DESC;
+
 -- 드랍테이블
 drop table final.member;
 drop table final.photoBoard;
