@@ -39,39 +39,53 @@ const url = '${pageContext.request.contextPath}';
 		<section>
 			<div class="box">
 				<div class="card">
-				
-					<div id="crew-img">
-					</div>
-					
+					<img src="<c:url value='/images/crew/${crew.crewPhoto}'/>" class="card-img-top" alt="..." id="cardImg">
+						
 					<div class="card-body">
 					
 						<div class="crew_name_section">
-							<h3 id="crew-title" class="card-title"></h3>
-							<div id="crew-Mng">
-							</div>
+							<h3 class="card-title">${crew.crewName}</h3>
+							<c:if test="${memberVo.memberIdx eq crew.memberIdx}">
+							<a href='<c:url value="/crew/edit/${crew.crewIdx}"/>'
+								class="btn btn-sm color_blue text_bold">크루 관리</a>
+							</c:if>
 						</div>
 						
-						<div id="crew-introduction">
-						</div>
-						
-						<ul class="crew_hashtag" id="crewHashTag">
-						</ul>
+						<pre class="card-text">${crew.crewDiscription}</pre>
+						<ul class="crew_hashtag" id="crewHashTag"></ul>
 						
 						<div class="crew_information">
-							<div id="crewCap" class="crew_captain"></div>
-							<div id="crew_number" class="crew_number"></div>
-							<div id="crew_comment_number" class="crew_comment_number"></div>
+							<span class="crew_captain">
+								<c:if test="${memberVo ne null}">
+									<a href="<c:url value='/feed/userfeed/${crew.memberIdx}'/>">
+								</c:if>
+									<p class="text_bold">${crew.memberNickName}</p> 
+								<img id="profile" src="<c:url value='/images/member/profile/${crew.memberProfile}'/>">
+								<c:if test="${memberVo ne null}">
+									</a>
+								</c:if>
+							</span>
+							<span class="crew_number">
+								<p class="text_bold">크루원</p>
+								<p>${crew.crewMemberNum}</p>
+							</span>
+							<span class="crew_comment_number">
+								<p class="text_bold">댓글</p>
+								<p>${crew.crewCommentNum}</p>
+							</span>
 						</div>
-						
+						<c:if test="${crew.isReg ne true}">
 							<div class="join_section" id="joinToCrew">
-								<button class="btn btn-light">가입하기</button>
-							</div>
-							<div class="join_section" id="outFromCrew">
-								<button class="btn btn-light">탈퇴하기</button>
-							</div>
-            
-					</div><!-- card-body 끝 -->
-				</div><!-- card 끝 -->
+	              <button class="btn btn-light">가입하기</button>
+	            </div>
+            </c:if>
+            <c:if test="${crew.isReg eq true and sessionScope.memberVo.memberIdx ne crew.memberIdx}">
+            	<div class="join_section" id="outFromCrew">
+            		<button class="btn btn-light">탈퇴하기</button>
+            	</div>
+            </c:if>
+					</div>
+				</div>
 				
 				<div class="comment_section">
 					<div class="comment_table">
@@ -86,20 +100,29 @@ const url = '${pageContext.request.contextPath}';
 							</ul>
 						</div>
 						
-						<div id="input-form">
+						<c:if test="${crew.isReg ne true}">
 							<div class="input_control">
-								<div id="textinput">
-									<input type="text" name="crewComment" class="form-control" id="crewComment">
-								</div>
-								<div id="textinput-readonly">
-									<input type="text" name="crewComment" class="form-control" id="crewComment" readonly="readonly">
+								<div>
+									<input type="text" class="form-control" readonly="readonly">
 								</div>
 								<div>
-									<input type="submit" value="게시" class="btn1 btn-light form-control" id="submit">
+									<input type="submit" value="게시" class="btn1 btn-light form-control" readonly="readonly">
 								</div>
 							</div>
-						</div>
-						
+						</c:if>
+						<c:if test="${crew.isReg eq true}">
+							<form method="post">
+								<div class="input_control">
+									<div>
+										<input type="text" name="crewComment" class="form-control" id="crewComment">
+										<input type="hidden" value="${crew.crewIdx}" id="crewIdx">
+									</div>
+									<div>
+										<input type="submit" value="게시" class="btn1 btn-light form-control" id="submit">
+									</div>
+								</div>
+							</form>
+						</c:if>
 					</div>
 				</div>
 			</div>

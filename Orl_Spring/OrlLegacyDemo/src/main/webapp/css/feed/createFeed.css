@@ -1,0 +1,278 @@
+@charset "UTF-8";
+
+/* 기본 설정 */
+* {
+	padding: 0%;
+	margin: 0%;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+button, input {
+	border: 0;
+	background-color: #00ff0000;
+}
+
+button:hover, span:hover {
+	cursor: pointer;
+}
+textarea {
+	border: 0px;
+	resize: none;
+}
+textarea:focus {
+	outline: none;
+}
+/* 기본 설정 끝 */
+
+/* 모달창 */
+.container_create {
+	display: flex;
+	width: 1000px;
+	height: 650px;
+}
+/* 모달창 실행시 스크롤 방지 */
+.not_scroll {
+	position: fixed;
+	overflow: hidden;
+	width: 100%;
+	height: 100%
+}
+.not_scroll .cont {
+	position: relative;
+	top: 0;
+}
+
+/* 모달창 종료 버튼 */
+.c_close {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	z-index: 1;
+}
+.c_close>img {
+	width: 20px;
+}
+
+/* 왼쪽 사진 영역 */
+.c_leftbox {
+	width: 55%;
+	background-color: ghostwhite;
+}
+/* 프리뷰 채우기 */
+.c_leftbox>img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* 오른쪽 컨텐츠 영역 */
+.c_rightbox {
+	width: 45%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+/* 게시자 프로필 영역 */
+.c_profile {
+	position: relative;
+	height: 100px;
+	border-bottom: 1px solid gainsboro;
+}
+
+/* 프로필 사진 채우기 */
+.c_photo {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+
+/* 프로필 사진 */
+.c_profile img {
+	margin: 30%;
+	width: 60px;	/* 수정 (09.17.우리) */
+	height: 60px;	/* 수정 (09.17.우리) */
+	object-fit: cover;
+	border-radius: 50%;
+	padding: 3px;
+	border: 1px solid #C9C0AE;
+}
+
+/* 게시자 닉네임 */
+.c_profile>a {
+	position: absolute;
+	left: 110px;
+	top: 40px;
+}
+
+/* 사진 선택 영역 */
+.filebox label {
+	position: absolute;
+	left: 300px;
+	top: 35px;
+	padding: 7px 30px;
+	font-size: 13px;
+	background-color: #FDEF7B;
+	cursor: pointer;
+	border: 1px solid grey;
+	border-bottom-color: grey;
+	border-radius: 5px;
+}
+
+/* 파일 업로드 */
+.filebox>input {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+/* 게시글 입력 영역 */
+.contentsbox {
+	height: 200px;
+	position: relative;
+}
+.contentsbox>p {
+	position: absolute;
+	left: 33px;
+	top: 50px;
+}
+/* 게시글 내용 */
+.contentsbox>textarea {
+	position: absolute;
+	left: 100px;
+	top: 30px;
+	border: 1px solid gray;
+	border-radius: 6px;
+	padding-left: 20px;
+	padding-top: 20px;
+	width: 320px;
+	height: 150px;
+	line-height: 130%;
+}
+/* 게시글 placeholder */
+textarea::placeholder {
+	position:absolute;
+	top: 20px;
+}
+
+/* 태그 입력 영역 */
+.tagbox {
+	height: 120px;
+	position: relative;
+}
+.tagbox>p {
+	position: absolute;
+	left: 45px;
+	top: 20px;
+}
+.noTag, .noHashtag {
+	position: absolute;
+	color: gray;
+	font-size: 13px;
+	padding-left: 95px;
+	padding-top: 20px;
+}
+/* 태그 입력 내용 */
+.tagbox>input {
+	position: absolute;
+	left: 100px;
+	top: 13px;
+	border: 1px solid gray;
+	border-radius: 6px;
+	padding-left: 20px;
+	width: 320px;
+	height: 33px;
+	font-size: 14px;
+}
+/* 입력된 태그 */
+.tagShow {
+	padding-top: 55px;
+	padding-left: 90px;
+}
+
+/* 해시태그 입력 영역 */
+.hashtagbox {
+	height: 120px;
+	position: relative;
+	border-bottom: 1px solid gainsboro;
+}
+.hashtagbox>p {
+	position: absolute;
+	top: 10px;
+	left: 30px;
+}
+/* 해시태그 입력 내용 */
+.hashtagbox>input {
+	position: absolute;
+	left: 100px;
+	top: 3px;
+	border: 1px solid gray;
+	border-radius: 6px;
+	padding-left: 20px;
+	width: 320px;
+	height: 33px;
+	font-size: 14px;
+}
+/* 입력된 해시태그 */
+.hashtagShow {
+	padding-top: 45px;
+	padding-left: 90px;
+	padding-right: 10px;
+}
+
+.tag-item, .hashtag-item {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 2;
+	/* 라인수 */
+	-webkit-box-orient: vertical;
+	word-wrap: break-word;
+	margin-left: 10px;
+	margin-top: 3px;
+}
+
+.tr_hashTag_area p {
+	margin-top: 70px;
+}
+/* 해시태그 지우기 */
+.del-btn {
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-left: 8px;
+}
+ul li.tag-item, ul li.hashtag-item {
+	background-color: rgb(253, 239, 123);
+	color: #000;
+	border-radius: 5px;
+	display: inline-block;
+	padding: 4px 7px;
+	font-size: 13px;
+}
+
+/* 피드 게시 */
+.submit {
+	height: 90px;
+	position: relative;
+}
+
+/* 게시 버튼 */
+.submit>input {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	left: 50%;
+	top: 50%;
+	border: 1px solid gray;
+	border-radius: 6px;
+	padding: 8px 50px;
+	background-color: #FDEF7B;
+}

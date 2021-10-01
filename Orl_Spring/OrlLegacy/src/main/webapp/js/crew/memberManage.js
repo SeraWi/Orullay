@@ -36,7 +36,7 @@ function getCrewMemberList() {
             $.each(data, function (index, item) {
                 html += '<tr>';
                 html += '<td>' + Number(index + 1) + '</td>';
-                html += '<td><img id="profile" src="'+url+'/images/default.jpg"></td>';
+                html += '<td><img id="profile" src="' + url2 + '/images/member/profile/' + item.memberProfile + '"></td>';
                 html += '<td id="nickname">' + item.memberNickName + '</td>';
                 html += '<td class="date">' + item.crewRegdate + '</td>';
                 if (item.memberIdx != sessionMemberIdx) {
@@ -48,6 +48,10 @@ function getCrewMemberList() {
                 html += '</tr>';
             });
             $('#crewMemberList').html(html);
+        },
+        error: function(){
+            alert('해당 페이지에 접근 할 권한이 없습니다.');
+            location.href = url2 + '/crew/detail?crewIdx=' + crewIdx + '';
         }
     });
 }

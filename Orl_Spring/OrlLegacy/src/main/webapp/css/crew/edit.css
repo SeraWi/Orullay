@@ -1,24 +1,12 @@
 @charset "UTF-8";
-
-/* 스크롤 배경 */
-::-webkit-scrollbar {
-   background-color: white;
-}
-/* 스크롤 막대 */
-::-webkit-scrollbar-thumb {
-   height: 30px;
-   border-radius: 10px;
-   background-color: #fdef7b;
-}
-
 .display_none {
-   display: none;
+	display: none;
 }
 .color_blue {
-   color: blue;
+	color: blue;
 }
 .color_red {
-   color: red;
+	color: red;
 }
 
 body {
@@ -91,7 +79,7 @@ body {
 }
 
 .edit_section input {
-   padding-left: 8px;
+	padding-left: 8px;
   font-size: 15px;
   height: 55px;
   width: 300px;
@@ -136,8 +124,7 @@ a {
 }
 
 #tag-list {
-  border: none;
-  width: 400px;
+  border: none
 }
 
 .tag-item {

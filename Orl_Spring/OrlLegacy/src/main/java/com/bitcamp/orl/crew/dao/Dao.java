@@ -12,17 +12,17 @@ import com.bitcamp.orl.member.domain.Member;
 
 public interface Dao {
 
+	// 모든 crew 리스트
+	List<Crew> selectAll(@Param("pageStart") int pageStart, @Param("perPageNum") int perPageNum);
+
+	// 검색을 통한 crew 리스트
+	List<Crew> selectCrewAll(SearchType searchType);
+
 	// 관리자 crew 전체 리스트
 	List<Crew> selectCrewListByAdmin();
 
-	// 관리자 crewreg 전체 리스트
+	// 관리자 crewReg 전체 리스트
 	List<CrewMemberList> selectAllCrewMemberList();
-
-	// 모든 crew 리스트+페이징
-	List<Crew> selectAll(@Param("pageStart") int pageStart, @Param("perPageNum") int perPageNum);
-
-	// 검색을 통한 crew 리스트 +페이징
-	List<Crew> selectCrewAll(SearchType searchType);
 
 	// 크루 게시물 총 개수
 	int CrewCount();
@@ -55,9 +55,8 @@ public interface Dao {
 	int insertCrewComment(@Param("crewComment") String crewComment, @Param("memberIdx") int memberIdx,
 			@Param("crewIdx") int crewIdx);
 
-	// 한 특정 crew의 댓글 리스트 가져오기(페이징+)
-	List<CrewCommentInfo> selectCrewCommentPaging(@Param("crewIdx") int crewIdx, @Param("firstRow") int firstRow,
-			@Param("amountPerPage") int amountPerPage);
+	//한 특정 crew의 댓글 리스트 가져오기(페이징+)
+	List <CrewCommentInfo> selectCrewCommentPaging(@Param("crewIdx")int crewIdx, @Param("firstRow")int firstRow, @Param("amountPerPage")int amountPerPage);
 
 	// 크루 생성
 	int insertCrew(Crew crew);

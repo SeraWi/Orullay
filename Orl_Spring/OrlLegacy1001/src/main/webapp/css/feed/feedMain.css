@@ -1,0 +1,248 @@
+@charset "UTF-8";
+
+/* 기본 설정 */
+* {
+	padding: 0;
+	margin: 0;
+}
+body {
+	background-color: #f8f8f8;
+}
+/* 스크롤 배경 */
+::-webkit-scrollbar {
+	background-color: white;
+}
+/* 스크롤 막대 */
+::-webkit-scrollbar-thumb {
+	height: 30px;
+	border-radius: 10px;
+	background-color: #fdef7b;
+}
+a {
+	text-decoration: none;
+	color: #000;
+}
+button {
+	border: 0;
+	background-color: #00ff0000;
+}
+
+/* 기본 설정 끝 */
+
+/* 상단 여백 */
+.top {
+	display: flex;
+	justify-content: space-between;
+}
+
+/* 페이지 타이틀 */
+.h1box {
+	width: 1000px;
+	display:flex;
+}
+.h1box h1 {
+	font-size: 3.5rem;
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	padding-top: 250px;
+}
+
+/* 피드 올리기 영역 */
+.div_createfeed {
+	height: 40px;
+}
+/* 하단 여백 */
+.div_createfeed>div {
+	padding-left: 600px;
+}
+/* 피드 올리기 버튼 */
+.modalbtn_createfeed {
+	display: block;
+	width: 130px;
+	line-height: 28px;
+	text-align: center;
+	font-size: 13px;
+	color: #545454;
+	cursor: pointer;
+	border: 1px solid grey;
+	border-radius: 5px;
+	background-color: #fdef7b;
+}
+
+.modal_createfeed { /* 모달-백그라운드 */
+	position: absolute;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+	top: 0;
+	left: 0;
+	display: none;
+	z-index: 10;
+}
+
+.modal_content_create { /* 모달-내용 */
+	width: 1010px;
+	height: 650px;
+	background: #fff;
+	position: relative;
+	top: 55%;
+	left: 50%; /* 모달창 위치 */
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+/* 상단 여백 */
+.top {
+	height: 300px;
+}
+
+/* 메인 영역 */
+.main {
+	height: 1650px;
+	display: flex;
+	justify-content: space-between;
+	height: auto;
+	overflow: hidden;
+}
+
+/* 메인-중앙 영역 */
+.mainbox {
+	display: flex;
+	flex-direction: column;
+	height: auto;
+}
+
+/* 산 아이콘 */
+.mountain {
+	width: 1000px;
+}
+.mountain>img {
+	width: 100px;
+	padding-left: 950px;
+}
+
+/* 피드 네비 영역 */
+.feednav {
+	display: flex;
+	justify-content: space-between;
+	padding-top: 30px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #C9C0AE;
+}
+/* 피드 정렬 */
+.keyword {
+	display:flex;
+	justify-content: space-between;
+	width: 110px;
+}
+#currentFeedClick, #likeFeedClick {
+	display: block;
+	width: 50px;
+	height: 30px;
+	line-height: 28px;
+	text-align: center;
+	font-size: 13px;
+	color: #545454;
+	cursor: pointer;
+	border: 1px solid grey;
+	border-radius: 5px;
+}
+
+/* 피드 정렬 폰트 */
+.keyword>a {
+	color: gray;
+}
+
+/* 피드 검색 영역 */
+.search {
+	position: relative;
+	padding-bottom: 5px;
+	z-index: 1;
+}
+/* 검색창 */
+.search>input {
+	width: 140px;
+	height: 30px;
+	outline: none;
+	border: 1px solid grey;
+	border-radius: 5px;
+	padding-left: 10px;
+	font-size: 12px;
+}
+/* 검색버튼  */
+.search>button {
+	position: absolute;
+	left: 110px;
+	border: 0;
+	background-color: #00ff0000;
+}
+/* 검색 아이콘 */
+.search img {
+	width: 25px;
+	padding-top: 3px;
+}
+
+/* 피드 갤러리 영역 */
+.feedbox {
+	width: 1000px;
+	padding-top: 30px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+.div_feedview>div {
+	width: 320px;
+	height: 320px;
+}
+.modalbtn_feedview {
+	cursor: pointer;
+	width: 100%;
+	height: 100%;
+}
+/* 피드 개별 사이즈 */
+.feed {
+	width: 340px;
+	height: 390px;
+}
+/* 피드 사진 사이즈 */
+.feedsize {
+	width: 320px;
+	height: 320px;
+	overflow: hidden;
+}
+/* 영역에 사진 채우기 */
+.feedimg {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* 피드 사진 hover */
+.feedsize>button:hover img {
+	filter: brightness(35%);
+}
+
+/* 피드 정보 */
+.feedinfo {
+	display: flex;
+	justify-content: space-between;
+	padding-top: 10px;
+	width: 320px;
+}
+.feedinfo p {
+	color: #afa7a7;
+	font-size: 14px;
+	padding-top: 4px;
+	padding-right: 8px;
+}
+
+/* 게시자 닉네임 */
+.nickname>a {
+	font-size: 18px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+}
+
+/* 하단 여백 */
+.bottom {
+	height: 290px;
+}
