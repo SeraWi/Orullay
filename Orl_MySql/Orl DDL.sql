@@ -128,5 +128,12 @@ VIEW `final`.`countLike` AS
     FROM
         `final`.`like` `L`
     GROUP BY `L`.`boardIdx`;
+
+-- countLike view
+create view final.countLike as
+select count(*) as count, boardIdx
+from final.like
+group by boardIdx
+order by count(*) DESC;
     
     
