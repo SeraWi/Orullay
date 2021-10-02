@@ -1,138 +1,132 @@
--- 멤버
-CREATE TABLE final.member (
-   `memberIdx` INTEGER NOT NULL AUTO_INCREMENT,
-   `memberId`VARCHAR(50) NOT NULL, 
-   `memberPw` VARCHAR(50) NOT NULL ,
-   `memberName` VARCHAR(50) NOT NULL ,
-   `memberEmail` VARCHAR(40) NOT NULL,
-   `memberProfile` VARCHAR(100) NULL,
-   `memberNickname` VARCHAR(50) NOT NULL ,
-   `memberRegdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-   `memberBirth` TIMESTAMP NULL,
-    constraint pk_memberIdx PRIMARY KEY (memberIdx),
-    constraint member_memberid_uq UNIQUE KEY (memberId),
-	constraint member_memberNickname_uq UNIQUE KEY (memberNickname)
-);
+CREATE TABLE final.crew(
+  `crewIdx` int NOT NULL AUTO_INCREMENT,
+  `crewName` varchar(50) COLLATE utf8_bin NOT NULL,
+  `crewPhoto` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  `crewDiscription` text COLLATE utf8_bin NOT NULL,
+  `crewCreatedate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `crewTag` varchar(200) COLLATE utf8_bin DEFAULT NULL,
+  `memberIdx` int NOT NULL,
+  PRIMARY KEY (`crewIdx`),
+  UNIQUE KEY `unique_crewName` (`crewName`),
+  KEY `fk_memberIdx_to_crewOwner` (`memberIdx`),
+  CONSTRAINT `fk_memberIdx_to_crewOwner` FOREIGN KEY (`memberIdx`) REFERENCES `member` (`memberIdx`) ON DELETE CASCADE
+) ;
 
--- 사진게시판
-CREATE TABLE final.photoBoard (
-   `boardIdx` INTEGER NOT NULL AUTO_INCREMENT,
-   `boardPhoto` VARCHAR(100) NOT NULL,
-   `boardDiscription` text NULL,
-   `boardDate` TIMESTAMP  NULL DEFAULT CURRENT_TIMESTAMP,
-   `hashtag` varchar(200) NULL,
-   `tag` varchar(200) NULL,
-   `memberIdx` INTEGER NOT NULL,
-    PRIMARY KEY (`boardIdx`),
-    CONSTRAINT `FK_memberIdx_to_board` FOREIGN KEY (`memberIdx`) REFERENCES final.member(`memberIdx`) ON DELETE CASCADE
-);
-
-insert into final.photoBoard (boardPhoto, boardDiscription, hashtag, memberIdx) values ('a', 'b', 'c', 1);
-
--- 사진게시판-댓글
-CREATE TABLE final.photoBoardComment (
-   `boardCommentIdx` INTEGER NOT NULL AUTO_INCREMENT ,
-   `comment` text NOT NULL,
-   `commentDate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-   `boardIdx` INTEGER NOT NULL,
-   `memberIdx` INTEGER NOT NULL,
-   PRIMARY KEY (`boardCommentIdx`),
-   CONSTRAINT `FK_boardIdx_to_boardComment` FOREIGN KEY (`boardIdx`) REFERENCES final.photoBoard(`boardIdx`) ON DELETE CASCADE,
-   CONSTRAINT `FK_memberIdx_to_boardComment` FOREIGN KEY (`memberIdx`) REFERENCES final.member(`memberIdx`)  ON DELETE CASCADE
-);
-
-
-
--- 크루
-CREATE TABLE final.crew (
-   `crewIdx` INTEGER NOT NULL auto_increment,
-   `crewName` VARCHAR(50) NOT NULL,
-    `crewPhoto` VARCHAR(100) NULL,
-   `crewDiscription` TEXT NOT NULL,
-   `crewCreatedate` timestamp default current_timestamp,
-   `crewTag` varchar(200) NULL,
-   `memberIdx` INTEGER NOT NULL,
-    `memberNickName` VARCHAR(50),
-    constraint pk_crewIdx primary key (crewIdx),
-    constraint unique_crewName unique key (crewName),
-    constraint fk_memberIdx_to_crewOwner foreign key (memberIdx) references final.member(memberIdx) ON DELETE CASCADE
-
-);
--- crew 에 마지막 컬럼 membernickname 삭제
-
--- 크루 넣기
-insert into final.crew (crewName, crewDiscription, crewTag,memberIdx) values ('달려라', '우리 크루는 어쩌고 저쩌고 같이 달리자 어쩌구 저쩌구 저쩌구 어쩌고 저꺼고 ', '안녕,남자,여자,서울', 2);
-insert into final.crew (crewName, crewDiscription, crewTag,memberIdx) values ('하이잉', '우리 크루는 어쩌고 저쩌고 같이 달리자 어쩌구 저쩌구 저쩌구 어쩌고 저꺼고 ', '바이,부천,일상', 19);
-
-
--- 크루가입
-CREATE TABLE final.crewreg (
-   `crewRegIdx` INTEGER NOT NULL auto_increment,
-   `crewRegdate` timestamp default current_timestamp,
-   `memberIdx` INTEGER NOT NULL,
-   `crewIdx` INTEGER NOT NULL,
-    constraint pk_crewIdx primary key (crewRegIdx),
-   constraint fk_memberIdx_to_crewReg foreign key (memberIdx) references final.member(memberIdx)  ON DELETE CASCADE,
-    constraint fk_crewIdx_to_crewReg foreign key (crewIdx) references final.crew(crewIdx)  ON DELETE CASCADE
-);
-
--- 크루댓글
 CREATE TABLE final.crewComment (
-   `crewCommentIdx` INTEGER NOT NULL auto_increment,
-   `crewComment` text NOT NULL,
-   `crewCommentDate` timestamp default current_timestamp,
-   `memberIdx` INTEGER NOT NULL,
-   `crewIdx` INTEGER NOT NULL,
-    constraint pk_crewCommentidx primary key (crewCommentIdx),
-    constraint fk_memberIdx_to_crewComment foreign key (memberIdx) references final.member(memberIdx)  ON DELETE CASCADE,
-    constraint fk_crewIdx_to_crewComment foreign key (crewIdx) references final.crew(crewIdx)  ON DELETE CASCADE
-);
+  `crewCommentIdx` int NOT NULL AUTO_INCREMENT,
+  `crewComment` text COLLATE utf8_bin NOT NULL,
+  `crewCommentDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `memberIdx` int NOT NULL,
+  `crewIdx` int NOT NULL,
+  PRIMARY KEY (`crewCommentIdx`),
+  KEY `fk_memberIdx_to_crewComment` (`memberIdx`),
+  KEY `fk_crewIdx_to_crewComment` (`crewIdx`),
+  CONSTRAINT `fk_crewIdx_to_crewComment` FOREIGN KEY (`crewIdx`) REFERENCES `crew` (`crewIdx`) ON DELETE CASCADE,
+  CONSTRAINT `fk_memberIdx_to_crewComment` FOREIGN KEY (`memberIdx`) REFERENCES `member` (`memberIdx`) ON DELETE CASCADE
+) ;
 
--- 팔로우
+CREATE TABLE final.crewreg (
+  `crewRegIdx` int NOT NULL AUTO_INCREMENT,
+  `crewRegdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `memberIdx` int NOT NULL,
+  `crewIdx` int NOT NULL,
+  PRIMARY KEY (`crewRegIdx`),
+  KEY `fk_memberIdx_to_crewReg` (`memberIdx`),
+  KEY `fk_crewIdx_to_crewReg` (`crewIdx`),
+  CONSTRAINT `fk_crewIdx_to_crewReg` FOREIGN KEY (`crewIdx`) REFERENCES `crew` (`crewIdx`) ON DELETE CASCADE,
+  CONSTRAINT `fk_memberIdx_to_crewReg` FOREIGN KEY (`memberIdx`) REFERENCES `member` (`memberIdx`) ON DELETE CASCADE
+) ;
+
 CREATE TABLE final.follow (
-   `followIdx` INTEGER NOT NULL auto_increment,
-    `followDate` timestamp default current_timestamp,
-    `memberIdx` INTEGER NOT NULL,
-    `memberIdx2` INTEGER NOT NULL,
-    constraint pk_followIdx primary key (followIdx),
-    constraint fk_myMemberIdx foreign key (memberIdx) references final.member(memberIdx)  ON DELETE CASCADE,
-    constraint fk_followMemberIdx foreign key (memberIdx2) references final.member(memberIdx)  ON DELETE CASCADE
-);
+  `followIdx` int NOT NULL AUTO_INCREMENT,
+  `followDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `memberIdx` int NOT NULL,
+  `memberIdx2` int NOT NULL,
+  PRIMARY KEY (`followIdx`),
+  KEY `fk_myMemberIdx` (`memberIdx`),
+  KEY `fk_followMemberIdx` (`memberIdx2`),
+  CONSTRAINT `fk_followMemberIdx` FOREIGN KEY (`memberIdx2`) REFERENCES `member` (`memberIdx`) ON DELETE CASCADE,
+  CONSTRAINT `fk_myMemberIdx` FOREIGN KEY (`memberIdx`) REFERENCES `member` (`memberIdx`) ON DELETE CASCADE
+) ;
 
--- 좋아요
 CREATE TABLE final.like (
-   `likeIdx` INTEGER NOT NULL auto_increment,
-    `likeDate` timestamp default current_timestamp,
-   `memberIdx` INTEGER NOT NULL,
-    `boardIdx` INTEGER NOT NULL,
-    constraint pk_likeIdx primary key (likeIdx),
-    constraint fk_myMemberIdx_to_like foreign key (memberIdx) references final.member(memberIdx)  ON DELETE CASCADE,
-    constraint fk_boardIdx foreign key (boardIdx) references final.photoBoard(boardIdx)  ON DELETE CASCADE
-);
+  `likeIdx` int NOT NULL AUTO_INCREMENT,
+  `likeDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `memberIdx` int NOT NULL,
+  `boardIdx` int NOT NULL,
+  PRIMARY KEY (`likeIdx`),
+  KEY `fk_myMemberIdx_to_like` (`memberIdx`),
+  KEY `fk_boardIdx` (`boardIdx`),
+  CONSTRAINT `fk_boardIdx` FOREIGN KEY (`boardIdx`) REFERENCES `photoBoard` (`boardIdx`) ON DELETE CASCADE,
+  CONSTRAINT `fk_myMemberIdx_to_like` FOREIGN KEY (`memberIdx`) REFERENCES `member` (`memberIdx`) ON DELETE CASCADE
+) ;
 
--- countLike view
-create view final.countLike as
-select count(*) as count, boardIdx
-from final.like
-group by boardIdx
-order by count(*) DESC;
+CREATE TABLE final.member (
+  `memberIdx` int NOT NULL AUTO_INCREMENT,
+  `memberId` varchar(50) COLLATE utf8_bin NOT NULL,
+  `memberPw` varchar(100) COLLATE utf8_bin NOT NULL,
+  `memberName` varchar(50) COLLATE utf8_bin NOT NULL,
+  `memberEmail` varchar(40) COLLATE utf8_bin NOT NULL,
+  `memberProfile` varchar(100) COLLATE utf8_bin DEFAULT 'default.jpg',
+  `memberNickname` varchar(50) COLLATE utf8_bin NOT NULL,
+  `memberRegdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `memberBirth` date DEFAULT NULL,
+  PRIMARY KEY (`memberIdx`),
+  UNIQUE KEY `member_memberid_uq` (`memberId`),
+  UNIQUE KEY `member_memberNickname_uq` (`memberNickname`)
+) ;
 
--- 드랍테이블
-drop table final.member;
-drop table final.photoBoard;
+CREATE TABLE final.mountain (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `infoidx` int DEFAULT NULL,
+  `mname` varchar(45) COLLATE utf8_bin NOT NULL,
+  `mcode` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `address` varchar(200) COLLATE utf8_bin DEFAULT NULL,
+  `x` double DEFAULT NULL,
+  `y` double DEFAULT NULL,
+  `info` varchar(2000) COLLATE utf8_bin DEFAULT NULL,
+  `height` int DEFAULT NULL,
+  `detail` varchar(2000) COLLATE utf8_bin DEFAULT NULL,
+  `transport` varchar(800) COLLATE utf8_bin DEFAULT NULL,
+  `img` varchar(100) COLLATE utf8_bin DEFAULT 'default.jpg',
+  PRIMARY KEY (`idx`)
+) ;
 
-drop table final.crew;
-drop table final.crewreg;
-drop table final.crewComment;
+CREATE TABLE final.photoBoard (
+  `boardIdx` int NOT NULL AUTO_INCREMENT,
+  `boardPhoto` varchar(100) COLLATE utf8_bin NOT NULL,
+  `boardDiscription` text COLLATE utf8_bin,
+  `boardDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `hashtag` varchar(200) COLLATE utf8_bin DEFAULT NULL,
+  `tag` varchar(200) COLLATE utf8_bin DEFAULT NULL,
+  `memberIdx` int NOT NULL,
+  PRIMARY KEY (`boardIdx`),
+  KEY `FK_memberIdx_to_board` (`memberIdx`),
+  CONSTRAINT `FK_memberIdx_to_board` FOREIGN KEY (`memberIdx`) REFERENCES `member` (`memberIdx`) ON DELETE CASCADE
+) ;
 
-DROP TABLE IF EXISTS final.photoBoard;
-DROP TABLE IF EXISTS final.photoBoardComment;
+CREATE TABLE final.photoBoardComment (
+  `boardCommentIdx` int NOT NULL AUTO_INCREMENT,
+  `comment` text COLLATE utf8_bin NOT NULL,
+  `commentDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `boardIdx` int NOT NULL,
+  `memberIdx` int NOT NULL,
+  PRIMARY KEY (`boardCommentIdx`),
+  KEY `FK_boardIdx_to_boardComment` (`boardIdx`),
+  KEY `FK_memberIdx_to_boardComment` (`memberIdx`),
+  CONSTRAINT `FK_boardIdx_to_boardComment` FOREIGN KEY (`boardIdx`) REFERENCES `photoBoard` (`boardIdx`) ON DELETE CASCADE,
+  CONSTRAINT `FK_memberIdx_to_boardComment` FOREIGN KEY (`memberIdx`) REFERENCES `member` (`memberIdx`) ON DELETE CASCADE
+) ;
 
-DROP TABLE IF EXISTS final.follow;
-DROP TABLE IF EXISTS final.like;
-
--- 멤버 삭제하기
-delete from final.member where idx=1;
-
-
--- 크루 넣기 
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `bit`@`%` 
+    SQL SECURITY DEFINER
+VIEW `final`.`countLike` AS
+    SELECT 
+        COUNT(0) AS `count`, `L`.`boardIdx` AS `boardIdx`
+    FROM
+        `final`.`like` `L`
+    GROUP BY `L`.`boardIdx`;
+    
+    
