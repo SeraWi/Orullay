@@ -1,4 +1,4 @@
-## ✔Orullay Prject                             
+## ✔Orullay Project                             
 * 등산 커뮤니티 웹 서비스
 
 ## ✔ Overview
