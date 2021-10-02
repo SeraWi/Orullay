@@ -32,8 +32,8 @@ public class FollowController {
 	@GetMapping("/feed/followerList")
 	@CrossOrigin
 	public List<FollowList> getFollowerList2(
-			@RequestParam("memberIdx") int memberIdx,
-			Model model
+			@RequestParam("memberIdx") int memberIdx
+			//Model model
 			) {
 
 		//팔로잉 리스트 가져오기
@@ -48,8 +48,8 @@ public class FollowController {
 	@GetMapping("/feed/followingList")
 	@CrossOrigin
 	public List<FollowList> getFollowingList2(
-			@RequestParam("memberIdx") int memberIdx,
-			Model model
+			@RequestParam("memberIdx") int memberIdx
+			//Model model
 			) {
 
 		//팔로잉 리스트 가져오기

@@ -47,20 +47,15 @@ public class FeedLikeController {
 			@RequestParam("boardIdx") int boardIdx,
 			@RequestParam("likeChange") int likeChange,
 			@RequestParam("myIdx") int myIdx
-			//HttpServletRequest request
 			) {
-		
-		// 세션에 있는 나의 idx
-		//int myIdx =((MemberDto)request.getSession().getAttribute("memberVo")).getMemberIdx();
-		
 		int likeResult =0;
 		
 		if(likeChange==1) {
-			
+			// 좋아요 누르기
 			likeResult = likeService.insertLike(myIdx,boardIdx);
 			
 		}else {
-			
+			// 좋아요 취소하기
 			likeResult = likeService.deleteLike(myIdx,boardIdx);
 		}
 		return likeResult;
