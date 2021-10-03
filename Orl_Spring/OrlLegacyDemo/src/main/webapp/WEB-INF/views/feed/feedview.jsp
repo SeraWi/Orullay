@@ -233,13 +233,16 @@
  		if(tag == null) {
 			return;
 		} else {
-			
+			// 배열
 			var str = [];
 			var html = "";
 			const tagArr = tag;
 			
+			//태그를 ,기준으로 잘라서 배열에 저장
+			// ,sera,test,라이언 형식->,로 시작 (첫번째 태그가 idx =1)
 			str = tagArr.split(",");
 			
+			// 태그의 갯수만큼 반복
 			for(var idx=1; idx<str.length; idx++) {
 				
 				$.ajax({ 
@@ -270,6 +273,7 @@
 			var str = [];
 			const hashTagArr = hashTag;
 			
+			//해시태그를 ,로 잘라서 배열에 저장
 			str = hashTagArr.split(",");
 			
 			var html = "";
