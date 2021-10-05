@@ -2,6 +2,8 @@ package com.bitcamp.orl.feed.domain;
 
 public class FeedSearchByNickname {
 
+	//닉네임으로 검색 결과(닉네임과 프로필사진)
+	
 	private int memberIdx;
 	private String memberNickname;
 	private String memberProfile;

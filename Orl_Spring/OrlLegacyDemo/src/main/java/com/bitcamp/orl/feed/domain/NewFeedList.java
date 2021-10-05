@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.*;
 
 public class NewFeedList {
 
-	// 피드정렬 : 최신순 (기본정렬)
+	// 1) 피드정렬 : 최신순 (기본정렬)에 사용
+	// 2) 피드정렬: 인기순 에 사용
+	// 3) 해시태그로 검색 결과에도 사용
 
 	private int boardIdx;
 	private String boardPhoto;

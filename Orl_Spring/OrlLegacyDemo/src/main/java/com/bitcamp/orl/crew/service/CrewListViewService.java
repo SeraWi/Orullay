@@ -36,6 +36,7 @@ public class CrewListViewService {
 		return myCrewList;
 	}
 	
+	//피드에서 사용(오버로딩)
 	public List<Crew> getMyCrewList(
 			int memberIdx
 			) {

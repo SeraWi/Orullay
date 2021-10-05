@@ -35,20 +35,16 @@ public class FeedSearchController {
 		
 		// 검색 결과를 가져오기
 		System.out.println("mySearch : " + mySearch);
-		// 닉네임으로 찾기 -> 닉네임, 프로필 사진 가져오기, memberIdx 
+		
+		// 1) 닉네임으로 검색 결과 : 닉네임, 프로필 사진 가져오기, memberIdx 
 		List<FeedSearchByNickname> searchByNickname = searchService.getSearchByNickname(mySearch);
 		
-		
-		// 해시태그로 검색 하면
-		// 해당 사진, 닉네임, memberIdx, boardIdx로 가져오기
-		
+		// 2) 해시태그 검색 결과 : 사진, 닉네임, memberIdx, boardIdx
 		List<NewFeedList> searchByHashtag = searchService.getSearchByHashtag(mySearch);
-		
 		
 		//모델에 저장
 		model.addAttribute("searchByHashtag",searchByHashtag);
 		model.addAttribute("searchByNickname",searchByNickname);
-		
 		
 		return "feed/feedSearch";
 	}
