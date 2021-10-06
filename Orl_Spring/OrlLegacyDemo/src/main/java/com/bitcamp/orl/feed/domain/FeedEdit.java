@@ -2,7 +2,7 @@ package com.bitcamp.orl.feed.domain;
 
 public class FeedEdit {
 	
-	// 피드 수정
+	// 피드 수정 command객체
 	
 	private String boardDiscription;
 	private String hashtag;

@@ -337,12 +337,13 @@
 	
 	/* 피드 수정 페이지 이동 */
 	function feedEdit(memberIdx, boardIdx){
-        	
+        //session memberIdx	
 		var myIdx = '${sessionScope.memberVo.memberIdx}';
 		var memberIdx = memberIdx;
 		var boardIdx = boardIdx;
     								
 		if(!myIdx) {
+			//세션에 로그인정보 없을경우
 			alert('로그인 후 이용 가능합니다');
 			location.href='<c:url value="/member/login"/>';
 		} else {

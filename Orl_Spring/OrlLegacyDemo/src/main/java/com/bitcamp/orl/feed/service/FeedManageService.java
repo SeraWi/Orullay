@@ -56,8 +56,10 @@ public class FeedManageService {
 		int result = 0;		
 		
 		dao = template.getMapper(FeedDao.class);
-				
+		
+		//1) boardIdx에 해당하는 게시물의 이미지 파일을 찾고 ->삭제(디렉토리에서 파일 삭제)
 		selectFile(boardIdx).delete();	//피드 사진 삭제
+		//2) 나머지 피드 정보 삭제
 		result = dao.deleteFeed(memberIdx, boardIdx); //피드 삭제
 		
 		return result;
@@ -70,13 +72,19 @@ public class FeedManageService {
 			) {
 		
 		dao = template.getMapper(FeedDao.class);
+		//이미지 저장 디렉토리 경로
 		String path = "//Users//apple//Desktop//Documents//java205//spring_project//.metadata//.plugins//org.eclipse.wst.server.core//tmp0//wtpwebapps//Orl//images//feed//feedw//uploadfile";
 		
+		//디렉토리 객체
 		File Dir = new File(path);
 		File file = null;
+		//boardIdx로 게시물 찾기
 		Feed feed = dao.selectFeed(boardIdx);
 		try {
+			
+			//찾은 게시물에 사진 찾기
 			String boardPhoto = feed.getBoardPhoto();
+			//(디렉토리, 이미지)
 			file = new File(Dir, boardPhoto);
 		} catch (Exception e) {
 			e.printStackTrace();
