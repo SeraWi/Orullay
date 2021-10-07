@@ -90,8 +90,12 @@ public interface FeedDao {
 			@Param("tag") String tag,
 			@Param("boardIdx") int boardIdx);
 
-	// 피드 댓글 작성
+	// 피드 댓글 작성(우리)
 	int insertFeedComment(FeedComment feedcomment);
+	
+	// 피드 댓글 작성(세라 수정) 오버로딩
+	int insertFeedComment(@Param("comment")String comment,@Param("boardIdx")int boardIdx,@Param("memberIdx")int memberIdx);
+
 
 	// 댓글 삭제
 	int deleteComment(@Param("boardCommentIdx") int boardCommentIdx);

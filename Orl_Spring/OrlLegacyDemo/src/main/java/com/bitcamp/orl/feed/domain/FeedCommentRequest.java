@@ -3,11 +3,12 @@ package com.bitcamp.orl.feed.domain;
 public class FeedCommentRequest {
 	
 	//피드 상세보기 (댓글 입력)
+	//댓글 게시하면 ->command객체로 저장
 	
-	private int boardCommentIdx;
-	private String comment;
-	private int boardIdx;
-	private int memberIdx;
+	private int boardCommentIdx; //댓글table idx
+	private String comment; //댓글
+	private int boardIdx; //게시글 idx
+	private int memberIdx; 
 	
 	public FeedCommentRequest() {
 		
@@ -61,6 +62,7 @@ public class FeedCommentRequest {
 	
 	//FeedCommentRequest -> FeedComment
 	public FeedComment toFeedComment() {
+		//                                                                   membernickname, memberProfile
 		return new FeedComment(boardCommentIdx, comment, boardIdx, memberIdx, null, null);
 	}
 	

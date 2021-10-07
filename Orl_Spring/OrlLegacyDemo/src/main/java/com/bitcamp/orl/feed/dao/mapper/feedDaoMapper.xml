@@ -95,8 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 피드 상세 -댓글리스트 (ajax) -->
 	<select id="selectFeedComment"
 		resultType="com.bitcamp.orl.feed.domain.FeedComment">
-		SELECT C.boardCommentIdx, C.comment, C.memberIdx,
-		M.memberNickname, M.memberProfile
+		SELECT C.boardCommentIdx, C.comment, C.memberIdx,M.memberNickname, M.memberProfile
 		FROM final.photoBoardComment AS C NATURAL JOIN final.member AS M
 		WHERE boardIdx = #{boardIdx}
 		ORDER BY C.boardCommentIdx DESC;

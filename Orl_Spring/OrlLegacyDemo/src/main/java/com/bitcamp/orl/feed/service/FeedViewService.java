@@ -49,25 +49,55 @@ public class FeedViewService {
 
 	}
 	
-	//피드 댓글 작성
-	public int insertComment(FeedCommentRequest commentRequest, HttpServletRequest request) {
+	//피드 댓글 작성 (우리- 기존코드)
+//	public int insertComment(FeedCommentRequest commentRequest, HttpServletRequest request) {
+//
+//		int result = 0;
+//			
+//		try {
+//				
+//			FeedComment feedComment = commentRequest.toFeedComment();
+//				
+//			MemberDto memberVo = (MemberDto)(request.getSession().getAttribute("memberVo"));
+//				
+//			//로그인한 상태
+//			if(memberVo != null) {
+//				// 세션에 있는memberIdx로 세팅
+//				feedComment.setMemberIdx(memberVo.getMemberIdx());
+//			}
+//
+//			dao = template.getMapper(FeedDao.class);
+//			result = dao.insertFeedComment(feedComment);
+//				
+//			System.out.println(feedComment);
+//				
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.out.println("예외발생");
+//		}
+//
+//		return result;
+//
+//	}
+	
+	// 피드 댓글 작성(세라 수정)
+	// 기존에 command객체로 받던 정보를 하나씩 받음 (게시물 idx, 댓글, request)
+	public int insertComment(int boardIdx, String comment, HttpServletRequest request) {
 
 		int result = 0;
 			
 		try {
-				
-			FeedComment feedComment = commentRequest.toFeedComment();
-				
+			//세션에 저장된 정보
 			MemberDto memberVo = (MemberDto)(request.getSession().getAttribute("memberVo"));
-				
+			
+			int memberIdx = 0;
+			//로그인한 상태
 			if(memberVo != null) {
-				feedComment.setMemberIdx(memberVo.getMemberIdx());
+				// 세션에 있는memberIdx가져오기
+				memberIdx = memberVo.getMemberIdx();
 			}
-
 			dao = template.getMapper(FeedDao.class);
-			result = dao.insertFeedComment(feedComment);
-				
-			System.out.println(feedComment);
+			result = dao.insertFeedComment(comment,boardIdx,memberIdx);
 				
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,6 +107,7 @@ public class FeedViewService {
 		return result;
 
 	}
+	
 	
 	// 추가 (09.25.우리)
 	//피드 존재 여부 체크
