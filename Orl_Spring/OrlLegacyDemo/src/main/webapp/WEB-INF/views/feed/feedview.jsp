@@ -511,7 +511,7 @@
                      
                      console.log('좋아요 취소하기 성공');
                      
-                         var html  ='<img id="current-dislike" name="insert" src="<c:url value="/images/feed/feedw/nolike.png"/>" onclick="clickLike(this.name)">';
+                     var html  ='<img id="current-dislike" name="insert" src="<c:url value="/images/feed/feedw/nolike.png"/>" onclick="clickLike(this.name)">';
                      
                      $('#likeButton').html(html);
                      

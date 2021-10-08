@@ -11,6 +11,7 @@ import com.bitcamp.orl.feed.domain.FeedLikeGallery;
 import com.bitcamp.orl.feed.domain.FeedSearchByNickname;
 import com.bitcamp.orl.feed.domain.FeedView;
 import com.bitcamp.orl.feed.domain.FollowList;
+import com.bitcamp.orl.feed.domain.FollowerList;
 import com.bitcamp.orl.feed.domain.NewFeedList;
 import com.bitcamp.orl.member.domain.Member;
 
@@ -25,9 +26,12 @@ public interface FeedDao {
 	int selectFollowingCount(@Param("memberIdx") int memberIdx);
 
 	// 3. follower 리스트 가져오기
-	List<FollowList> selectFollowerList(@Param("memberIdx") int memberIdx);
+	/* List<FollowList> selectFollowerList(@Param("memberIdx") int memberIdx); */
+	
+	//3-1 follower 리스트 가져오기 발전(10.08)
+	List<FollowerList> selectFollowerList(@Param("yourIdx") int yourIdx, @Param("myIdx")int myIdx);
 
-	// 4. follwing 리스트 가져오기
+	// 4. following 리스트 가져오기
 	List<FollowList> selectFollowingList(@Param("memberIdx") int memberIdx);
 
 	// 5. 게시물 갯수 가져오기

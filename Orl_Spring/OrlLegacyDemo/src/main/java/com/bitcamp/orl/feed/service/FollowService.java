@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.bitcamp.orl.feed.dao.FeedDao;
 import com.bitcamp.orl.feed.domain.FollowList;
+import com.bitcamp.orl.feed.domain.FollowerList;
 
 @Service
 public class FollowService {
@@ -36,11 +37,21 @@ public class FollowService {
 	}
 	
 	// 2) 팔로워 리스트 가져오기(08.31)
-	public List<FollowList> getFollowerList(int memberIdx) {
-		List<FollowList> followerList = new ArrayList<>();
+//	public List<FollowList> getFollowerList(int memberIdx) {
+//		List<FollowList> followerList = new ArrayList<>();
+//		
+//		dao = template.getMapper(FeedDao.class);
+//		followerList = dao.selectFollowerList(memberIdx);
+//		
+//		return followerList;
+//	}
+	
+	// 2-1) 팔로월 리스트 가져오기 발전(10,08)
+	public List<FollowerList> getFollowerList(int yourIdx, int myIdx) {
+		List<FollowerList> followerList = new ArrayList<>();
 		
 		dao = template.getMapper(FeedDao.class);
-		followerList = dao.selectFollowerList(memberIdx);
+		followerList = dao.selectFollowerList(yourIdx,myIdx);
 		
 		return followerList;
 	}

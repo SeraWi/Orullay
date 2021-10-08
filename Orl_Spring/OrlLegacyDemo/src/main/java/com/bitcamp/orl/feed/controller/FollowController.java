@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bitcamp.orl.feed.domain.FollowList;
+import com.bitcamp.orl.feed.domain.FollowerList;
 import com.bitcamp.orl.feed.service.FollowService;
 import com.bitcamp.orl.member.domain.MemberDto;
 
@@ -28,26 +29,44 @@ public class FollowController {
 	@Autowired
 	private FollowService followService;
 	
-	// 1) 비동기 통신 팔로워 리스트 출력 기존에 get방식에서 -->post 로 바꿈 0915
+	// 1) 비동기 통신 팔로워 리스트 출력 
+//	@GetMapping("/feed/followerList")
+//	@CrossOrigin
+//	public List<FollowList> getFollowerList2(
+//			@RequestParam("memberIdx") int memberIdx
+//			//Model model
+//			) {
+//
+//		//팔로잉 리스트 가져오기
+//		List<FollowList> followerList =followService.getFollowerList(memberIdx);
+//		System.out.println(followerList); //확인!
+//
+//		return followerList;
+//	}
+	
+	// 1-1) 팔로워 리스트 리팩토링 1008
+	// 피드 주인 idx와 나의 idx를 파라미터로 받아서
+	// 피드 주인의 팔로워중 내가 팔로우 하는지 안하는지 확인
 	@GetMapping("/feed/followerList")
 	@CrossOrigin
-	public List<FollowList> getFollowerList2(
-			@RequestParam("memberIdx") int memberIdx
-			//Model model
+	public List<FollowerList> getFollowerList(
+			@RequestParam("yourIdx") int yourIdx,
+			@RequestParam("myIdx") int myIdx
 			) {
 
 		//팔로잉 리스트 가져오기
-		List<FollowList> followerList =followService.getFollowerList(memberIdx);
+		List<FollowerList> followerList =followService.getFollowerList(yourIdx,myIdx);
 		System.out.println(followerList); //확인!
 
 		return followerList;
 	}
+	
 
 	
-	// 2) 비동기 통신으로 팔로잉 리스트 출력, 기존의 get 방식에서 post로 바꿈 0915
+	// 2) 비동기 통신으로 팔로잉 리스트 출력
 	@GetMapping("/feed/followingList")
 	@CrossOrigin
-	public List<FollowList> getFollowingList2(
+	public List<FollowList> getFollowingList(
 			@RequestParam("memberIdx") int memberIdx
 			//Model model
 			) {
