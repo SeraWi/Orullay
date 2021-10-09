@@ -9,13 +9,7 @@
 ## ✔ Project Period
 * 2021.08.06~2021.09.28
 
-## ✔ Feutures
-설계
-* Usecase Diagram
-* ERD Diagram
-* Class Diagram
-
-## ✔ 구현 기술
+## ✔ Tech
 * Front End : HTML, JS, CSS, Bootstrap, Ajax,Jquery
 * Back End : Apache Tomcat, MyBatis, AWS, Java, Spring, Amazon EC2, Amazon S3
 * API : Kakaomap, 산림청, OpenWeather, Kakao, Nave
