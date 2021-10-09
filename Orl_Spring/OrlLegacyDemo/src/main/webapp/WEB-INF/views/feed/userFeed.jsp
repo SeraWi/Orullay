@@ -390,13 +390,13 @@
 	               html += '      <img src="<c:url value="/images/member/profile/'+item.memberProfile+'"/>"/>';
 	               html += '   </a>';
 	               html += '   <a class="nickname-area" href="<c:url value="/feed/userfeed/'+item.yourFollowerIdx+'"/>">'+item.memberNickname+'</a>';
-	               html += '   <input type="hidden" value="'+item.yourFollowerIdx+'">';
+	               //html += '   <input type="hidden" value="'+item.yourFollowerIdx+'">';
 	               
 	               
-	               // 1) item.yourFollowerIdx 가 나의 Idx 일 경우 -> 버튼 안보여주기
+	               // 1)item.yourFollowerIdx 가 나의 Idx 일 경우 -> 버튼 안보여주기
 	               // 2)item.followStatus가 null, 팔로우 안하는 상태->팔로우 시작하기 버튼
 	               // 3)item.followStatus가 not null, 팔로우 하는 상태->팔로우 그만하기 버튼
-	               // 팔로우 시작하기 혹은 그만하기 누르면 : yourFollowerIdx와 myIdx, 현재 팔로우 상태를 파라미터로 넘김
+	               // 팔로우 시작하기 혹은 그만하기 누르면 : yourFollowerIdx와 myIdx, 현재 팔로우 상태를 파라미터로 
 	               if(myIdx == item.yourFollowerIdx){
 	                 html +='';
 	               }else if(item.followStatus == null){
