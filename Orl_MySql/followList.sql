@@ -70,7 +70,7 @@ select yours.memberIdx, mine.memberIdx2
 from (select * from final.followListView where memberIdx2 =1) as yours left join (select * from final.followListView where memberIdx = 10) as mine
 on  yours.memberIdx = mine.memberIdx2;
 
--- 필요한 정보모두 출련한 남의 follower 리스트 + 팔로우 버튼 상태(내 기준)
+-- 필요한 정보모두 출력한 남의 follower 리스트 + 팔로우 버튼 상태(내 기준)
 --     남의 팔로워 idx, 그 사람의 memberNickname, memberProfile,  내가 팔로우하는지 (안하면 null)
 select yours.memberIdx, yours.memberNickname, yours.memberProfile, mine.memberIdx2
 from (select * from final.followListView where memberIdx2 =1) as yours left join (select * from final.followListView where memberIdx = 10) as mine
