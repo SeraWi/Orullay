@@ -565,6 +565,50 @@
    });/* 닫기끝 */
    
    
+   // 팔로잉 리스트 가져오는 리스트 함수
+   function followingList(){
+	   
+	// 명단 초기화 
+       $('#following-members').html('');
+       
+       // 팔로잉 버튼 눌렀을 때 명단 가져오기 ->비동기 통신으로
+       $.ajax({
+          url:'<c:url value="/feed/followingList"/>',
+          //url:'http://localhost:8083/feed/followingList',
+          type:'GET',
+          data:{
+             memberIdx:'${member.memberIdx}'
+          },
+          success: function(data){
+             console.log(data); 
+             
+           $.each(data,function(index,item){
+                console.log(index,item);
+                
+                var html ='<div class="member">';
+                html += '   <a href="<c:url value="/feed/userfeed/'+item.memberIdx2+'"/>">';
+                html += '      <img src="<c:url value="/images/member/profile/'+item.memberProfile+'"/>"/>';
+                html += '   </a>';
+                html += '   <a class="nickname-area" href="<c:url value="/feed/userfeed/'+item.memberIdx2+'"/>">'+item.memberNickname+'</a>';
+                
+                //세션에 있는 memberIdx == 모델에 저장된 memberIdx -->내 피드일 경우 팔로우버튼 보여주기
+                if(${sessionScope.memberVo.memberIdx eq member.memberIdx}){
+                     html += '   <input type="hidden" value="'+item.memberIdx2+'">';
+                  html += '   <input type="button" class="button-gray-inList" value="팔로우 그만하기">';  
+                }
+                
+                html += '</div>';
+                
+                //div에 추가하기
+                $('#following-members').append(html);
+             });  
+          }/* success 끝 */
+       });/* ajax 끝 */
+	   
+	   
+   };// function followingList 끝
+   
+   
    // 내 팔로잉 리스트 안쪽에 버튼에서 
    // 팔로우 그만하기 버튼  눌렀을 때 처리하기
    $('#following-members').on('click','input[type=button]',function(){

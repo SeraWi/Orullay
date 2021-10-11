@@ -2,7 +2,7 @@ package com.bitcamp.orl.feed.domain;
 
 public class FollowerList {
 	
-	//follwer리스트 가져올때 사용
+	//follower리스트 가져올때 사용
 	
 	private int yourFollowerIdx; //해당 유저의 팔로워 idx 남남 idx
 	private String memberNickname; // 팔로워의 닉네임  남남 닉네임

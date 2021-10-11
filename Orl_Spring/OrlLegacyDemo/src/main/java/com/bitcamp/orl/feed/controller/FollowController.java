@@ -54,7 +54,7 @@ public class FollowController {
 			@RequestParam("myIdx") int myIdx
 			) {
 
-		//팔로잉 리스트 가져오기
+		//팔로워 리스트 가져오기
 		List<FollowerList> followerList =followService.getFollowerList(yourIdx,myIdx);
 		System.out.println(followerList); //확인!
 
