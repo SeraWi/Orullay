@@ -13,6 +13,7 @@ import com.bitcamp.orl.feed.domain.FeedView;
 import com.bitcamp.orl.feed.domain.FollowList;
 import com.bitcamp.orl.feed.domain.FollowerList;
 import com.bitcamp.orl.feed.domain.NewFeedList;
+import com.bitcamp.orl.feed.domain.NewFollowList;
 import com.bitcamp.orl.member.domain.Member;
 
 public interface FeedDao {
@@ -25,14 +26,20 @@ public interface FeedDao {
 	// 2. following 수 가져오기
 	int selectFollowingCount(@Param("memberIdx") int memberIdx);
 
-	// 3. follower 리스트 가져오기
+	// 3. follower 리스트 가져오기 (팔로우 버튼 없는 기존 버전)
 	/* List<FollowList> selectFollowerList(@Param("memberIdx") int memberIdx); */
 	
 	//3-1 follower 리스트 가져오기 발전(10.08)
-	List<FollowerList> selectFollowerList(@Param("yourIdx") int yourIdx, @Param("myIdx")int myIdx);
+	//List<FollowerList> selectFollowerList(@Param("yourIdx") int yourIdx, @Param("myIdx")int myIdx);
+	
+	//3-2 follower리스트 가져오기 (view 사용) 10.12
+	List<NewFollowList> selectFollowerList(@Param("yourIdx") int yourIdx, @Param("myIdx")int myIdx);
 
-	// 4. following 리스트 가져오기
-	List<FollowList> selectFollowingList(@Param("memberIdx") int memberIdx);
+	// 4. following 리스트 가져오기 08.31
+	//List<FollowList> selectFollowingList(@Param("memberIdx") int memberIdx);
+	
+	//4-1 following 리스트 가져오기 +버튼 (10.12)
+	List<NewFollowList> selectFollowingList(@Param("yourIdx")int yourIdx,@Param("myIdx") int myIdx);
 
 	// 5. 게시물 갯수 가져오기
 	int selectFeedCount(@Param("memberIdx") int memberIdx);

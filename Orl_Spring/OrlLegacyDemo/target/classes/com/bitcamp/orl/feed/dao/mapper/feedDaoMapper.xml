@@ -155,15 +155,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-	<!-- 4. 팔로잉 리스트 가져오기 (비동기통신) -->
-	<select id="selectFollowingList"
-		resultType="com.bitcamp.orl.feed.domain.FollowList">
-		select F.followIdx, F.memberIdx, F.memberIdx2,
-		M.memberNickname,M.memberProfile
-		from final.follow as F inner join final.member as M
-		on F.memberIdx2 = M.memberIdx
-		where F.memberIdx = #{memberIdx};
-	</select>
 
 	<!-- 3. 팔로워 리스트 가져오기 (비동기통신) -->
 
@@ -179,7 +170,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 3.1 팔로워 리스트 가져오기(수정 10.08) -->
 	
-	<select id="selectFollowerList"
+	<!-- <select id="selectFollowerList"
 			resultType="com.bitcamp.orl.feed.domain.FollowerList"
 	>
 	select F1.memberIdx as yourFollowerIdx,
@@ -189,6 +180,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	from (select * from final.follow where memberIdx2=#{yourIdx}) as F1 left join (select * from final.follow where memberIdx=#{myIdx}) as F2 
 	on   F1. memberIdx = F2.memberIdx2
 	order by F1.memberIdx;
+	</select> -->
+	
+	
+	<!-- 3.2 팔로워 리스트 가져오기(수정 10.12) -->
+	<select id="selectFollowerList"
+			resultType ="com.bitcamp.orl.feed.domain.NewFollowList"
+	>
+	select yours.memberIdx, yours.memberNickname, yours.memberProfile, mine.memberIdx2 as followStatus
+	from (select * from final.followListView where memberIdx2 =#{yourIdx}) as yours left join (select * from final.followListView where memberIdx = #{myIdx}) as mine
+	on  yours.memberIdx = mine.memberIdx2
+	order by yours.memberIdx;
+	</select>
+	
+	
+	<!-- 4. 팔로잉 리스트 가져오기 (비동기통신) 08.31-->
+<!-- 	<select id="selectFollowingList"
+		resultType="com.bitcamp.orl.feed.domain.FollowList">
+		select F.followIdx, F.memberIdx, F.memberIdx2,
+		M.memberNickname,M.memberProfile
+		from final.follow as F inner join final.member as M
+		on F.memberIdx2 = M.memberIdx
+		where F.memberIdx = #{memberIdx};
+	</select> -->
+	
+	
+	<!-- 4. 팔로잉 리스트 가져오기 (비동기통신) 10.12-->
+	<select id="selectFollowingList"
+		resultType="com.bitcamp.orl.feed.domain.NewFollowList">
+		select yours.memberIdx2, yours.memberNickname2, yours.memberProfile2, mine.memberIdx2 as followStatus
+		from (select * from final.followlistView where memberIdx =#{yourIdx}) as yours left join (select * from final.followListView where memberIdx = #{myIdx}) as mine
+		on  yours.memberIdx2 = mine.memberIdx2
+		order by yours.memberIdx2;
 	</select>
 
 

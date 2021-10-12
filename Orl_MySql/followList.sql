@@ -65,6 +65,8 @@ order by F.memberIdx;
 
 select * from followList;
 
+select * from final.followlistview;
+
 -- 남(idx = 1)의 follower중 내(idx =10)가 팔로우 하는지 안하는지 (null이면 팔로우 안하는 중)
 select yours.memberIdx, mine.memberIdx2
 from (select * from final.followListView where memberIdx2 =1) as yours left join (select * from final.followListView where memberIdx = 10) as mine
@@ -72,7 +74,7 @@ on  yours.memberIdx = mine.memberIdx2;
 
 -- 필요한 정보모두 출력한 남의 follower 리스트 + 팔로우 버튼 상태(내 기준)
 --     남의 팔로워 idx, 그 사람의 memberNickname, memberProfile,  내가 팔로우하는지 (안하면 null)
-select yours.memberIdx, yours.memberNickname, yours.memberProfile, mine.memberIdx2
+select yours.memberIdx, yours.memberNickname, yours.memberProfile, mine.memberIdx2 as followStatus
 from (select * from final.followListView where memberIdx2 =1) as yours left join (select * from final.followListView where memberIdx = 10) as mine
 on  yours.memberIdx = mine.memberIdx2
 order by yours.memberIdx;
@@ -83,10 +85,16 @@ select * from final.member;
 -- 남의 followingList + 버튼 상태
 -- 남(idx=1)의 팔로잉 리스트에서 내(idx=10)가 팔로우 하는지 안하는 지 확인
 --      남 idx,        남의 팔로잉 리스트 idx, 그 사람 닉네임          , 프로필 사진,           , 내가 팔로우하는지(null은 unfollow중)
-select yours.memberIdx,yours.memberIdx2, yours.memberNickname2, yours.memberProfile2, mine.memberIdx2
+select yours.memberIdx,yours.memberIdx2, yours.memberNickname2, yours.memberProfile2, mine.memberIdx2 as followStatus
 from (select * from final.followlistView where memberIdx =1) as yours left join (select * from final.followListView where memberIdx = 10) as mine
 on  yours.memberIdx2 = mine.memberIdx2
 order by yours.memberIdx2;
+
+select yours.memberIdx2, yours.memberNickname2, yours.memberProfile2, mine.memberIdx2 as followStatus
+from (select * from final.followlistView where memberIdx =1) as yours left join (select * from final.followListView where memberIdx = 10) as mine
+on  yours.memberIdx2 = mine.memberIdx2
+order by yours.memberIdx2;
+
 
 drop view final.followList;
 

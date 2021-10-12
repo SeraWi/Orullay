@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.bitcamp.orl.feed.dao.FeedDao;
 import com.bitcamp.orl.feed.domain.FollowList;
 import com.bitcamp.orl.feed.domain.FollowerList;
+import com.bitcamp.orl.feed.domain.NewFollowList;
 
 @Service
 public class FollowService {
@@ -26,15 +27,28 @@ public class FollowService {
 	
 	
 	// 1) 팔로잉 리스트 가져오기(08.31)
-	public List<FollowList> getFollowingList(int memberIdx) {
-		List<FollowList> followingList = new ArrayList<>();
+//	public List<FollowList> getFollowingList(int memberIdx) {
+//		List<FollowList> followingList = new ArrayList<>();
+//		
+//		dao = template.getMapper(FeedDao.class);
+//		followingList = dao.selectFollowingList(memberIdx);
+//		
+//		
+//		return followingList;
+//	}
+	
+	// 팔로잉 리스트 수정 10.12
+	public List<NewFollowList> getFollowingList(int yourIdx, int myIdx) {
+		List<NewFollowList> followingList = new ArrayList<>();
 		
 		dao = template.getMapper(FeedDao.class);
-		followingList = dao.selectFollowingList(memberIdx);
+		followingList = dao.selectFollowingList(yourIdx,myIdx);
 		
 		
 		return followingList;
 	}
+	
+	
 	
 	// 2) 팔로워 리스트 가져오기(08.31)
 //	public List<FollowList> getFollowerList(int memberIdx) {
@@ -46,15 +60,27 @@ public class FollowService {
 //		return followerList;
 //	}
 	
-	// 2-1) 팔로월 리스트 가져오기 발전(10,08)
-	public List<FollowerList> getFollowerList(int yourIdx, int myIdx) {
-		List<FollowerList> followerList = new ArrayList<>();
+	// 2-1) 팔로월 리스트 가져오기 발전(10.08)
+//	public List<FollowerList> getFollowerList(int yourIdx, int myIdx) {
+//		List<FollowerList> followerList = new ArrayList<>();
+//		
+//		dao = template.getMapper(FeedDao.class);
+//		followerList = dao.selectFollowerList(yourIdx,myIdx);
+//		
+//		return followerList;
+//	}
+	
+	// 2-2) 팔로워 리스트 가져오기 수정, view사용(10.12)
+	public List<NewFollowList> getFollowerList(int yourIdx, int myIdx){
+		List<NewFollowList> followerList = new ArrayList<>();
 		
 		dao = template.getMapper(FeedDao.class);
 		followerList = dao.selectFollowerList(yourIdx,myIdx);
 		
 		return followerList;
 	}
+	
+	
 	
 	
 	// 3) 팔로우 시작하기 -->insert (09.01)
