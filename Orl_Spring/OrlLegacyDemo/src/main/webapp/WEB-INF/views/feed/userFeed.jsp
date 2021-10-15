@@ -363,11 +363,12 @@
    
    // 3) 팔로워 리스트 함수
    function followerList(){
-	 //팔로워 보여주기
+	 	  //팔로워 보여주기
 	      $('#container-follower').removeClass('display_none');
 	      
 	      //팔로워 명단 초기화 시키기
 	      $('#follower-members').html('');
+	      
 	      
 	      //비동기 통신
 	      $.ajax({
@@ -385,6 +386,7 @@
 	        	   //나의 Idx(세션에 저장된 정보)
 	        	   var myIdx = '${sessionScope.memberVo.memberIdx}';
 	        	   //console.log(index,item);
+	        	  
 	               
 	               var html ='<div class="member">';
 	               html += '   <a href="<c:url value="/feed/userfeed/'+item.memberIdx+'"/>">';
@@ -408,9 +410,9 @@
 	               if(myIdx == item.memberIdx){
 	                 html +='';
 	               }else if(item.followStatus == null){
-	            	 html += '   <input type="button" class="button-yellow-inList" value="팔로우 시작하기" name ="insert" onclick="followBtnClick('+item.memberIdx+',${sessionScope.memberVo.memberIdx},'+item.followStatus+')">'; 
+	            	 html += '   <input type="button" class="button-yellow-inList" value="follow" name ="insert" onclick="followBtnClick('+item.memberIdx+',${sessionScope.memberVo.memberIdx},'+item.followStatus+',0)">'; 
 	               }else if(item.followStatus != null){
-	            	 html += '   <input type="button" class="button-gray-inList" value="팔로우 그만하기" name ="delete" onclick="followBtnClick(+'+item.memberIdx+',${sessionScope.memberVo.memberIdx},'+item.followStatus+')">';     
+	            	 html += '   <input type="button" class="button-gray-inList" value="unfollow" name ="delete" onclick="followBtnClick(+'+item.memberIdx+',${sessionScope.memberVo.memberIdx},'+item.followStatus+',0)">';     
 	               }
 	               html += '</div>';
 	               
@@ -426,12 +428,13 @@
    
    <script>
    
-   // 4) 팔로워 리스트 안 쪽 팔로우 시작하기 그만하기 버튼 처리 함수
-   function followBtnClick(yourIdx,myIdx,followStatus){
+   // 리스트 안쪽 팔로우 시작하기 그만하기 버튼 처리 함수 (팔로워, 팔로잉 둘다 가능)
+   function followBtnClick(yourIdx,myIdx,followStatus,current){
 	   var yourIdx = yourIdx;// 팔로우 버튼 누른 사용자의 idx
 	   var myIdx = myIdx; //나의 idx
 	   var followStatus =followStatus; //현재 팔로우 하는 지 상태(내기준)
-	   
+	   // current == 0: 팔로워 리스트 current == 1 팔로잉 리스트
+	   var current = current;
 	   
 	   //팔로우 시작하기 (현재 상태== 팔로우 안하는 중 == null)
 	   if(followStatus == null){
@@ -451,9 +454,11 @@
 					   console.log('inser성공');
 					   
 					   //팔로워 리스트 갱신 혹은 팔로잉 리스트 갱신
-					   
-					   	followerList();
-					   	
+					   if(current == 0){
+						   followerList();
+					   } else{
+						   followingList();
+					   }
 					   
 					   //팔로잉 수 +1(내 피드 일 때만 팔로잉 수 변동)
 					   if(${member.memberIdx eq sessionScope.memberVo.memberIdx}){
@@ -488,8 +493,11 @@
 					   console.log('delete성공');
 					   
 					   //팔로워 리스트 혹은 팔로잉 리스트 갱신
-					  	followerList();
-					  	
+					   if(current == 0){
+						   followerList();
+					   } else{
+						   followingList();
+					   }
 					   
 					   //팔로잉 수 -1 (내 피드일 때만 팔로잉 수 변동)
 					   if(${member.memberIdx eq sessionScope.memberVo.memberIdx}){
@@ -532,8 +540,11 @@
    
    // 1) 팔로잉 글자 클릭 -> 리스트 가져오기
    $('#following').click(function(){
+	   	// 팔로잉 리스트 창 보이도록
          $('#container-following').removeClass('display_none');
-            followingList();
+	   	
+	   	// 비동기 통신으로 리스트 가져오기
+         followingList();
             
       });/*click 이벤트 끝  */
       
@@ -544,6 +555,7 @@
        $('#following-members').html('');
        
        // 팔로잉 버튼 눌렀을 때 명단 가져오기 ->비동기 통신으로
+       // 파라미터 : 나의 idx, 피드 주인 idx
        $.ajax({
           url:'<c:url value="/feed/followingList"/>',
           //url:'http://localhost:8083/feed/followingList',
@@ -556,12 +568,13 @@
              //console.log(data); 
              
            $.each(data,function(index,item){
-                console.log(index,item);
+                //console.log(index,item);
                 
                 //나의 Idx(세션에 저장된 정보)
-	        	     var myIdx = '${sessionScope.memberVo.memberIdx}';
+	        	var myIdx = '${sessionScope.memberVo.memberIdx}';
                 
-                //가져오는 데이터 : memberIdx2(팔로워 idx), memberNickname2(팔로워닉네임), memberProfile2(팔로워사진),followStatus(내기준 팔로우버튼상태)
+                //가져오는 데이터 
+                //memberIdx2(팔로워 idx), memberNickname2(팔로워닉네임), memberProfile2(팔로워사진),followStatus(내기준 팔로우버튼상태)
                 
                 var html ='<div class="member">';
                 html += '   <a href="<c:url value="/feed/userfeed/'+item.memberIdx2+'"/>">';
@@ -575,11 +588,10 @@
                 if(item.memberIdx2 == myIdx){
                	 html +='';
                 }else if(item.followStatus ==null){
-               	 html += '   <input type="button" class="button-yellow-inList" value="팔로우 시작하기" name ="insert" onclick="followBtnClick2('+item.memberIdx2+',${sessionScope.memberVo.memberIdx},'+item.followStatus+')">'; 
+               	 html += '   <input type="button" class="button-yellow-inList" value="follow" name ="insert" onclick="followBtnClick('+item.memberIdx2+',${sessionScope.memberVo.memberIdx},'+item.followStatus+',1)">'; 
                 }else if(item.followStatus !=null){
-               	 html += '   <input type="button" class="button-gray-inList" value="팔로우 그만하기" name ="delete" onclick="followBtnClick2(+'+item.memberIdx2+',${sessionScope.memberVo.memberIdx},'+item.followStatus+')">';
+               	 html += '   <input type="button" class="button-gray-inList" value="unfollow" name ="delete" onclick="followBtnClick(+'+item.memberIdx2+',${sessionScope.memberVo.memberIdx},'+item.followStatus+',1)">';
                 }
-                
                 
                 html += '</div>';
                 
@@ -593,90 +605,13 @@
    
    // 3) 닫기 버튼 눌렀을 때 
    $('.form-close').click(function(){
+	  // 모달창 보이지 않도록 처리
       $('#container-following').addClass('display_none');
       
    });/* 닫기끝 */
    
    
-   // 4) 팔로우 버튼 클릭 함수
-   function followBtnClick2(yourIdx,myIdx,followStatus){
-	   var yourIdx = yourIdx;// 팔로우 버튼 누른 사용자의 idx
-	   var myIdx = myIdx; //나의 idx
-	   var followStatus =followStatus; //현재 팔로우 하는 지 상태(내기준)
-	   
-	   
-	   //팔로우 시작하기 (현재 상태== 팔로우 안하는 중 == null)
-	   if(followStatus == null){
-		   console.log('insert');
-		   //비동기 통신 시작
-		   $.ajax({
-			   url:'<c:url value="/feed/followButtonClick"/>',
-			   type:'POST',
-			   data:{
-				   followStatus:'1',
-				   yourIdx:yourIdx,
-				   myIdx:myIdx
-			   },
-			   success: function(data){
-				   if(data==1){
-					   
-					   console.log('inser성공');
-					   
-					   //팔로워 리스트 갱신 혹은 팔로잉 리스트 갱신
-					   
-					   	followingList();
-					   	
-					   
-					   //팔로잉 수 +1(내 피드 일 때만 팔로잉 수 변동)
-					   if(${member.memberIdx eq sessionScope.memberVo.memberIdx}){
-			               var followingCount = parseInt($('#followingCount').text());
-			               var newFollowingCount = followingCount +1;
-			               $('#followingCount').text(newFollowingCount);  
-					   }
-
-					   
-				   }/* success 안 if끝 */
-			   }/* success 끝 */
-			   
-			   
-		   });/*ajax끝 */
-		   
-		   
-	   }else{
-		   //팔로우 그만하기
-		   console.log('delete');
-		   //비동기 통신 시작
-		   $.ajax({
-			   url:'<c:url value="/feed/followButtonClick"/>',
-			   type:'POST',
-			   data:{
-				   followStatus:'-1',
-				   yourIdx:yourIdx,
-				   myIdx:myIdx
-			   }, 
-			   success: function(data){
-				   if(data==1){
-					   
-					   console.log('delete성공');
-					   
-					   //팔로워 리스트 혹은 팔로잉 리스트 갱신
-					  	followingList();
-					  	
-					   
-					   //팔로잉 수 -1 (내 피드일 때만 팔로잉 수 변동)
-					   if(${member.memberIdx eq sessionScope.memberVo.memberIdx}){
-			               var followingCount = parseInt($('#followingCount').text());
-			               var newFollowingCount = followingCount -1;
-			               $('#followingCount').text(newFollowingCount);  
-					   }
-					   
-				   }/* success 안 if끝 */
-			   }/* success 끝 */
-			   
-		   });/* ajax끝 */
-		   
-	   }
-   };// 팔로우 버튼 클릭 함수 끝
+   
    
    </script>
    

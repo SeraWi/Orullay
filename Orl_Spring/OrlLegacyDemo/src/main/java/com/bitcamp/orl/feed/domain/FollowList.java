@@ -1,6 +1,7 @@
 package com.bitcamp.orl.feed.domain;
 
 public class FollowList {
+	// 0813 버전
 	//기존에 following, follower list 가져올때 사용
 	//db에서 follow table 과 member table을 조인하여 가져올 때 사용
 	

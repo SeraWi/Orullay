@@ -602,7 +602,7 @@
                 
                 //세션에 있는 memberIdx == 모델에 저장된 memberIdx -->내 피드일 경우 팔로우버튼 보여주기
                 if(${sessionScope.memberVo.memberIdx eq member.memberIdx}){
-                     html += '   <input type="hidden" value="'+item.memberIdx2+'">';
+                  html += '   <input type="hidden" value="'+item.memberIdx2+'">';
                   html += '   <input type="button" class="button-gray-inList" value="팔로우 그만하기">';  
                 }
                 

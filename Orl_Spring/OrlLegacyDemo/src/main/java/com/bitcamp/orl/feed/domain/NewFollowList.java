@@ -11,7 +11,7 @@ public class NewFollowList {
 	private String memberNickname2; // 닉네임
 	private String memberProfile2;// 프사
 	
-	private String followStatus; // 나의 기준 팔로우 버튼 상태
+	private String followStatus; // 나의 기준 팔로우 버튼 상태 (내기준 팔로우 하지 않은 상태==null)
 	
 	
 	// 기본 생성자
