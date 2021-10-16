@@ -122,7 +122,8 @@
                  
                 
                  $.ajax({
-                     url:'http://3.36.48.110:8083/feed/followButtonClick',
+                	//url:'http://3.36.48.110:8083/feed/followButtonClick',
+                     url:'http://localhost:8083/feed/followButtonClick',
                      type:'POST',
                      data:{
                         followStatus : '-1',
@@ -162,7 +163,8 @@
                  //팔로우 시작하기: followStatus ==1
                  
                  $.ajax({
-                     url:'http://3.36.48.110:8083/feed/followButtonClick',
+                     //url:'http://3.36.48.110:8083/feed/followButtonClick',
+                     url:'http://localhost:8083/feed/followButtonClick',
                      type:'POST',
                      data:{
                         followStatus :'1',
@@ -353,7 +355,7 @@
       
       //비동기 통신
       $.ajax({
-         url:'http://3.36.48.110:8083/feed/followerList',
+         url:'http://localhost:8083/feed/followerList',
          type:'GET',
          data:{
             memberIdx:'${member.memberIdx}'
@@ -417,7 +419,7 @@
             
             // 팔로잉 버튼 눌렀을 때 명단 가져오기 ->비동기 통신으로
             $.ajax({
-               url:'http://3.36.48.110:8083/feed/followingList',
+               url:'http://localhost:8083/feed/followingList',
                type:'GET',
                data:{
                   memberIdx:'${member.memberIdx}'
@@ -481,7 +483,7 @@
          
          //비동기 통신 시작
           $.ajax({
-             url:'http://3.36.48.110:8083/feed/followButtonClick',
+             url:'http://localhost:8083/feed/followButtonClick',
              type:'POST',
              data:{
                 followStatus : '-1',
@@ -520,7 +522,7 @@
          //followStatus =='팔로우 시작하기'
       //비동기 통신 시작
        $.ajax({
-    	    url:'http://3.36.48.110:8083/feed/followButtonClick',
+    	    url:'http://localhost:8083/feed/followButtonClick',
             type:'POST',
             data:{
                followStatus : '1',
