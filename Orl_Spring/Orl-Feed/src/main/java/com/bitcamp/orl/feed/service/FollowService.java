@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bitcamp.orl.feed.domain.FollowList;
+import com.bitcamp.orl.feed.domain.NewFollowList;
 import com.bitcamp.orl.feed.mapper.FeedDao;
 
 @Service
@@ -24,28 +25,50 @@ public class FollowService {
    private SqlSessionTemplate template;
    
    
-   // 1) 팔로잉 리스트 가져오기(08.31)
-   public List<FollowList> getFollowingList(int memberIdx) {
-      List<FollowList> followingList = new ArrayList<>();
-      
-      dao = template.getMapper(FeedDao.class);
-      followingList = dao.selectFollowingList(memberIdx);
-      
-      
-      return followingList;
-   }
+   // 1) 팔로워 리스트 가져오기(08.31)
+//   public List<FollowList> getFollowerList(int memberIdx) {
+//      List<FollowList> followerList = new ArrayList<>();
+//      
+//      dao = template.getMapper(FeedDao.class);
+//      followerList = dao.selectFollowerList(memberIdx);
+//      
+//      return followerList;
+//   }
    
-   // 2) 팔로워 리스트 가져오기(08.31)
-   public List<FollowList> getFollowerList(int memberIdx) {
-      List<FollowList> followerList = new ArrayList<>();
-      
-      dao = template.getMapper(FeedDao.class);
-      followerList = dao.selectFollowerList(memberIdx);
-      
-      return followerList;
-   }
+	// 1) 팔로워 리스트 가져오기 수정, view사용(10.12)
+	public List<NewFollowList> getFollowerList(int yourIdx, int myIdx){
+		List<NewFollowList> followerList = new ArrayList<>();
+		
+		dao = template.getMapper(FeedDao.class);
+		followerList = dao.selectFollowerList(yourIdx,myIdx);
+		
+		return followerList;
+	}
    
    
+   // 2) 팔로잉 리스트 가져오기(08.31)
+//   public List<FollowList> getFollowingList(int memberIdx) {
+//      List<FollowList> followingList = new ArrayList<>();
+//      
+//      dao = template.getMapper(FeedDao.class);
+//      followingList = dao.selectFollowingList(memberIdx);
+//      
+//      
+//      return followingList;
+//   }
+   
+   // 2-1) 팔로잉 리스트 가져오기 수정
+	public List<NewFollowList> getFollowingList(int yourIdx, int myIdx) {
+		List<NewFollowList> followingList = new ArrayList<>();
+		
+		dao = template.getMapper(FeedDao.class);
+		followingList = dao.selectFollowingList(yourIdx,myIdx);
+		
+		
+		return followingList;
+	}
+
+	
    // 3) 팔로우 시작하기 -->insert (09.01)
    public int followStart(int myIdx, int yourIdx) {
       //팔로우 시작하기 결과

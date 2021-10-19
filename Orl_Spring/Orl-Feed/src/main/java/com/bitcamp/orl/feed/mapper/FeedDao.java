@@ -36,11 +36,17 @@ public interface FeedDao {
 	
 	
 	
-	// 1. follower 리스트 가져오기
-	   List<FollowList> selectFollowerList(@Param("memberIdx") int memberIdx);
+	   // 1. follower 리스트 가져오기
+	   //List<FollowList> selectFollowerList(@Param("memberIdx") int memberIdx);
+	   
+	   // 1-1 follower 리스트 가져오기 수정
+	   List<NewFollowList> selectFollowerList(@Param("yourIdx") int yourIdx, @Param("myIdx")int myIdx);
 
 	   // 2. follwing 리스트 가져오기
-	   List<FollowList> selectFollowingList(@Param("memberIdx") int memberIdx);
+	   //List<FollowList> selectFollowingList(@Param("memberIdx") int memberIdx);
+	   
+	   //2-1 following 리스트 가져오기 수정
+	   List<NewFollowList> selectFollowingList(@Param("yourIdx")int yourIdx,@Param("myIdx") int myIdx);
 	   
 	   // 3. 팔로우 시작하기
 	   int insertFollowMember(@Param("myIdx") int myIdx, @Param("yourIdx") int yourIdx);

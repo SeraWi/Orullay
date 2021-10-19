@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bitcamp.orl.feed.domain.FollowList;
+import com.bitcamp.orl.feed.domain.NewFollowList;
 import com.bitcamp.orl.feed.service.FollowService;
 
 @RestController
@@ -24,37 +25,68 @@ public class FollowController {
    private FollowService followService;
    
    // 1) 비동기 통신 팔로워 리스트 출력(get방식)
-   @GetMapping("/feed/followerList")
-   @CrossOrigin
-   public List<FollowList> getFollowerList2(
-         @RequestParam("memberIdx") int memberIdx
-         ) {
+//   @GetMapping("/feed/followerList")
+//   @CrossOrigin
+//   public List<FollowList> getFollowerList2(
+//         @RequestParam("memberIdx") int memberIdx
+//         ) {
+//
+//      //팔로잉 리스트 가져오기
+//      List<FollowList> followerList =followService.getFollowerList(memberIdx);
+//      System.out.println(followerList); //확인!
+//      System.out.println("boot follower list");
+//
+//      return followerList;
+//   }
+   
+   
+   	// 1) 팔로워 리스트 (view 사용) - 수정 버전
+	@GetMapping("/feed/followerList")
+	@CrossOrigin
+	public List<NewFollowList> getFollowerList(
+			@RequestParam("yourIdx") int yourIdx,
+			@RequestParam("myIdx") int myIdx
+			) {
 
-      //팔로잉 리스트 가져오기
-      List<FollowList> followerList =followService.getFollowerList(memberIdx);
-      System.out.println(followerList); //확인!
-      System.out.println("boot follower list");
+		//팔로워 리스트 가져오기
+		List<NewFollowList> followerList =followService.getFollowerList(yourIdx,myIdx);
+		System.out.println(followerList); //확인!
 
-      return followerList;
-   }
-
+		return followerList;
+	}
    
    // 2) 비동기 통신으로 팔로잉 리스트 출력(GET방식)
-   @GetMapping("/feed/followingList")
-   @CrossOrigin
-   public List<FollowList> getFollowingList2(
-         @RequestParam("memberIdx") int memberIdx
-         ) {
-
-      //팔로잉 리스트 가져오기
-      List<FollowList> followingList =followService.getFollowingList(memberIdx);
-      System.out.println(followingList); 
-      System.out.println("boot following list");
-
-      //비동기 통신의 결과 데이터 json
-      return followingList;
-   }
-
+//   @GetMapping("/feed/followingList")
+//   @CrossOrigin
+//   public List<FollowList> getFollowingList2(
+//         @RequestParam("memberIdx") int memberIdx
+//         ) {
+//
+//      //팔로잉 리스트 가져오기
+//      List<FollowList> followingList =followService.getFollowingList(memberIdx);
+//      System.out.println(followingList); 
+//      System.out.println("boot following list");
+//
+//      //비동기 통신의 결과 데이터 json
+//      return followingList;
+//   }
+	
+	//2) 팔로잉 리스트 (수정)
+	@GetMapping("/feed/followingList")
+	@CrossOrigin
+	public List<NewFollowList> getFollowingList(
+			@RequestParam("yourIdx") int yourIdx,
+			@RequestParam("myIdx") int myIdx
+			){
+		
+		//팔로우 리스트
+		List<NewFollowList> followingList =followService.getFollowingList(yourIdx,myIdx);
+		System.out.println(followingList);
+		
+		return followingList;
+	}
+	
+	
    // 3) 팔로우 시작하기 혹은 그만하기 버튼 클릭 (insert, delete->POST방식)
    // 피드에 바로 보여지는 버튼에 사용
    // 내 피드에서 팔로잉 눌럿을 때 리스트와 같이 나오는 버튼에도 사용
