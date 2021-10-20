@@ -84,7 +84,7 @@ public class FeedViewController {
 				Model model) {
 			
 			
-			//댓글 작성에 필요한 정봎->boardIdx,댓글 comment,작성자 memberIdx 
+			//댓글 작성에 필요한 정보->boardIdx,댓글 comment,작성자 memberIdx 
 			// 댓글 작성 insert
 			viewService.insertComment(boardIdx, comment, request);
 			
