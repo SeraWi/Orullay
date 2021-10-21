@@ -51,7 +51,7 @@
     <!-- end filter 설정 -->
 
     <!-- 에러 페이지 추가 0924  -->
-<!--     <error-page>
+   <error-page>
         <exception-type>java.lang.Throwable</exception-type>
         <location>/WEB-INF/views/error/serverError.jsp</location>
     </error-page>
@@ -69,6 +69,6 @@
     <error-page>
         <error-code>500</error-code>
         <location>/WEB-INF/views/error/serverError.jsp</location>
-    </error-page> -->
+    </error-page> 
 
 </web-app>

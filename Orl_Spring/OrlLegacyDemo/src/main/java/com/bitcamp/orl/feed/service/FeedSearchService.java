@@ -26,7 +26,6 @@ public class FeedSearchService {
 		
 		List<NewFeedList> searchByHashtag = null;
 		
-		
 		dao =template.getMapper(FeedDao.class);
 		searchByHashtag = dao.selectByHashtag(hashtag);
 		
@@ -40,7 +39,6 @@ public class FeedSearchService {
 		
 		dao =template.getMapper(FeedDao.class);
 		searchByNickname = dao.selectByNickname(nickname);
-		
 		
 		return searchByNickname;
 	}

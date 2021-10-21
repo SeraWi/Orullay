@@ -221,8 +221,10 @@
 	/* 09.24.추가 */
 	/* 해시태그 search submit */
 	function setParamTag(tag){
+		// tag를 클릭하면 tag내용을 input 에 넣어주고
         $("#mySearch").val(tag);
         console.log(tag);
+        // 그다음에 submit 해서 post로 보낸다
         $("#formSearch").submit();
     }
 	
