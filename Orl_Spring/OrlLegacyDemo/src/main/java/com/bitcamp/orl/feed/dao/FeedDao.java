@@ -33,12 +33,19 @@ public interface FeedDao {
 	//List<FollowerList> selectFollowerList(@Param("yourIdx") int yourIdx, @Param("myIdx")int myIdx);
 	
 	//3-2 follower리스트 가져오기 (view 사용) 10.12
+	//List<NewFollowList> selectFollowerList(@Param("yourIdx") int yourIdx, @Param("myIdx")int myIdx);
+	
+	//3-3 프로시져 사용해서 follower 리스트 가져오기 11.02
 	List<NewFollowList> selectFollowerList(@Param("yourIdx") int yourIdx, @Param("myIdx")int myIdx);
+	
 
 	// 4. following 리스트 가져오기 08.31
 	//List<FollowList> selectFollowingList(@Param("memberIdx") int memberIdx);
 	
-	//4-1 following 리스트 가져오기 +버튼 (10.12)
+	//4-1 following 리스트 가져오기 +버튼 (10.12) view 사용
+	//List<NewFollowList> selectFollowingList(@Param("yourIdx")int yourIdx,@Param("myIdx") int myIdx);
+	
+	// following list 프로시져 사용
 	List<NewFollowList> selectFollowingList(@Param("yourIdx")int yourIdx,@Param("myIdx") int myIdx);
 
 	// 5. 게시물 갯수 가져오기

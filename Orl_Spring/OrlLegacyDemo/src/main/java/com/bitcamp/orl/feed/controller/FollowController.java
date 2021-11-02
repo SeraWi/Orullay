@@ -72,7 +72,7 @@ public class FollowController {
 
 		//팔로워 리스트 가져오기
 		List<NewFollowList> followerList =followService.getFollowerList(yourIdx,myIdx);
-		System.out.println(followerList); //확인!
+		//System.out.println(followerList); //확인!
 
 		return followerList;
 	}

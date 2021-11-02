@@ -184,15 +184,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<!-- 3.2 팔로워 리스트 가져오기(수정 10.12) -->
-	<select id="selectFollowerList"
+<!-- 	<select id="selectFollowerList"
 			resultType ="com.bitcamp.orl.feed.domain.NewFollowList"
 	>
 	select yours.memberIdx, yours.memberNickname, yours.memberProfile, mine.memberIdx2 as followStatus
 	from (select * from final.followListView where memberIdx2 =#{yourIdx}) as yours left join (select * from final.followListView where memberIdx = #{myIdx}) as mine
 	on  yours.memberIdx = mine.memberIdx2
 	order by yours.memberIdx;
-	</select>
+	</select> -->
 	
+	<!-- 3.3 팔로월 리스트 가져오기 - 프로시져 사용(수정11.02)  -->
+	<select id="selectFollowerList"
+			resultType ="com.bitcamp.orl.feed.domain.NewFollowList"
+	>
+	call getFollower(#{yourIdx},#{myIdx});
+	</select>
 	
 	<!-- 4. 팔로잉 리스트 가져오기 (비동기통신) 08.31-->
 <!-- 	<select id="selectFollowingList"
@@ -206,12 +212,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<!-- 4-1. 팔로잉 리스트 가져오기 (비동기통신) 10.12-->
-	<select id="selectFollowingList"
+<!-- 	<select id="selectFollowingList"
 		resultType="com.bitcamp.orl.feed.domain.NewFollowList">
 		select yours.memberIdx2, yours.memberNickname2, yours.memberProfile2, mine.memberIdx2 as followStatus
 		from (select * from final.followlistView where memberIdx =#{yourIdx}) as yours left join (select * from final.followListView where memberIdx = #{myIdx}) as mine
 		on  yours.memberIdx2 = mine.memberIdx2
 		order by yours.memberIdx2;
+	</select> -->
+	
+	
+	<!-- 팔로잉 리스트 가져오기 프로시져 사용 11.02 -->
+	<select id="selectFollowingList"
+		resultType="com.bitcamp.orl.feed.domain.NewFollowList">
+	call getFollowing(#{yourIdx},#{myIdx});
 	</select>
 
 
