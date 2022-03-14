@@ -1,7 +1,7 @@
 package com.bitcamp.orl.feed.domain;
 
 public class FollowerList {
-	// 10월 8일
+	//버전2) 10월 8일
 	//follower리스트 가져올때 사용
 	
 	private int yourFollowerIdx; //해당 유저의 팔로워 idx 남남 idx

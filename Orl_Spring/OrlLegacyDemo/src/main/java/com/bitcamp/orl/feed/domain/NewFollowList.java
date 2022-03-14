@@ -1,7 +1,7 @@
 package com.bitcamp.orl.feed.domain;
 
 public class NewFollowList {
-	// 수정1012
+	// 최종 버전) 수정1012
 	// 팔로잉, 팔로우 리스트 ->view 사용해서 가져오는 버전
 	
 	private int memberIdx; //팔로우버튼을 누른 사람

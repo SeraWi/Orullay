@@ -40,7 +40,7 @@ public class FollowController {
 //   }
    
    
-   	// 1) 팔로워 리스트 (view 사용) - 수정 버전
+   	// 1) 팔로워 리스트 수정
 	@GetMapping("/feed/followerList")
 	@CrossOrigin
 	public List<NewFollowList> getFollowerList(

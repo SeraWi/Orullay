@@ -50,6 +50,7 @@ public class FeedMainController {
 		//작성 피드 insert
 		createService.insert(feedrequest, request);
 	    
+		// insert 두번 방지를 위해 redirect
 		return "redirect:/feed/feedmain";
 	}
 	

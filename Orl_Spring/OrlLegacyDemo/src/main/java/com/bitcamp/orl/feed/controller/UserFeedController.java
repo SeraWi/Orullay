@@ -118,6 +118,7 @@ public class UserFeedController {
       createService.insert(feedrequest, request);
 
       //0915 수정 insert중복되는 거 막기 위해 get방식으로 redirect 시키기
+      //post방식으로 넘긴다음 새로고침을 하면 post의 성질을 가지고 있기 때문에 get방식 메서드로 넘어가지 않고 계속 post메서드로 넘어감!!
       return "redirect:/feed/userfeed/"+memberIdx;
    }
    

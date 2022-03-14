@@ -22,7 +22,8 @@ create procedure getFollower(
 )
 begin
 	select yours.memberIdx, yours.memberNickname, yours.memberProfile, mine.memberIdx2 as followStatus
-	from (select * from final.followListView where memberIdx2 = yourIdx) as yours left join (select * from final.followListView where memberIdx = myIdx) as mine
+	from (select * from final.followListView where memberIdx2 = yourIdx) as yours 
+    left join (select * from final.followListView where memberIdx = myIdx) as mine
 	on  yours.memberIdx = mine.memberIdx2
 	order by yours.memberIdx;
 end //

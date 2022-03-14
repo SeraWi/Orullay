@@ -35,7 +35,7 @@ public class FollowService {
 //      return followerList;
 //   }
    
-	// 1) 팔로워 리스트 가져오기 수정, view사용(10.12)
+	// 1) 팔로워 리스트 가져오기 수정, view사용(10.12) ->프로시저 사용 11.03
 	public List<NewFollowList> getFollowerList(int yourIdx, int myIdx){
 		List<NewFollowList> followerList = new ArrayList<>();
 		
@@ -44,6 +44,7 @@ public class FollowService {
 		
 		return followerList;
 	}
+	
    
    
    // 2) 팔로잉 리스트 가져오기(08.31)
